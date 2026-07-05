@@ -10,4 +10,6 @@ pub enum ServiceError {
     Integration(String),
     #[error("configuration error: {0}")]
     Configuration(String),
+    #[error("not found: {0}")]
+    NotFound(String),
 }

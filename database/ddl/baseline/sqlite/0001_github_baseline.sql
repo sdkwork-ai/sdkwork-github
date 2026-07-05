@@ -114,3 +114,122 @@ CREATE INDEX IF NOT EXISTS idx_github_plan_item_plan
 
 CREATE INDEX IF NOT EXISTS idx_github_plan_item_issue
     ON github_plan_item (issue_id);
+
+-- ════════════════════════════════════════════════════════
+-- Tracker domain: user issues, labels, milestones, roadmaps
+-- ════════════════════════════════════════════════════════
+
+CREATE TABLE IF NOT EXISTS github_tracker_label (
+    id              TEXT PRIMARY KEY NOT NULL,
+    tenant_id       TEXT NOT NULL,
+    organization_id TEXT NOT NULL,
+    name            TEXT NOT NULL,
+    color           TEXT NOT NULL DEFAULT '6e7681',
+    description     TEXT,
+    created_at      TEXT NOT NULL,
+    updated_at      TEXT NOT NULL,
+    UNIQUE (tenant_id, organization_id, name)
+);
+
+CREATE TABLE IF NOT EXISTS github_tracker_milestone (
+    id              TEXT PRIMARY KEY NOT NULL,
+    tenant_id       TEXT NOT NULL,
+    organization_id TEXT NOT NULL,
+    title           TEXT NOT NULL,
+    description     TEXT,
+    status          TEXT NOT NULL DEFAULT 'open',
+    due_date        TEXT,
+    created_at      TEXT NOT NULL,
+    updated_at      TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS github_tracker_issue (
+    id              TEXT PRIMARY KEY NOT NULL,
+    tenant_id       TEXT NOT NULL,
+    organization_id TEXT NOT NULL,
+    title           TEXT NOT NULL,
+    description     TEXT NOT NULL,
+    type            TEXT NOT NULL DEFAULT 'bug',
+    status          TEXT NOT NULL DEFAULT 'open',
+    priority        TEXT NOT NULL DEFAULT 'medium',
+    submitted_by    TEXT NOT NULL,
+    assignee_id     TEXT,
+    milestone_id    TEXT,
+    github_issue_id TEXT,
+    vote_count      INTEGER NOT NULL DEFAULT 0,
+    comment_count   INTEGER NOT NULL DEFAULT 0,
+    created_at      TEXT NOT NULL,
+    updated_at      TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS github_tracker_issue_label (
+    issue_id        TEXT NOT NULL,
+    label_id        TEXT NOT NULL,
+    PRIMARY KEY (issue_id, label_id)
+);
+
+CREATE TABLE IF NOT EXISTS github_tracker_comment (
+    id              TEXT PRIMARY KEY NOT NULL,
+    issue_id        TEXT NOT NULL,
+    author_id       TEXT NOT NULL,
+    content         TEXT NOT NULL,
+    created_at      TEXT NOT NULL,
+    updated_at      TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS github_tracker_vote (
+    id              TEXT PRIMARY KEY NOT NULL,
+    issue_id        TEXT NOT NULL,
+    user_id         TEXT NOT NULL,
+    created_at      TEXT NOT NULL,
+    UNIQUE (issue_id, user_id)
+);
+
+CREATE TABLE IF NOT EXISTS github_tracker_roadmap (
+    id              TEXT PRIMARY KEY NOT NULL,
+    tenant_id       TEXT NOT NULL,
+    organization_id TEXT NOT NULL,
+    title           TEXT NOT NULL,
+    description     TEXT,
+    status          TEXT NOT NULL DEFAULT 'active',
+    start_date      TEXT,
+    target_date     TEXT,
+    created_at      TEXT NOT NULL,
+    updated_at      TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS github_tracker_roadmap_item (
+    id              TEXT PRIMARY KEY NOT NULL,
+    roadmap_id      TEXT NOT NULL,
+    issue_id        TEXT NOT NULL,
+    track           TEXT,
+    start_date      TEXT,
+    target_date     TEXT,
+    sort_order      INTEGER NOT NULL DEFAULT 0,
+    created_at      TEXT NOT NULL,
+    updated_at      TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_tracker_label_scope
+    ON github_tracker_label (tenant_id, organization_id);
+
+CREATE INDEX IF NOT EXISTS idx_tracker_milestone_scope
+    ON github_tracker_milestone (tenant_id, organization_id, status);
+
+CREATE INDEX IF NOT EXISTS idx_tracker_issue_scope
+    ON github_tracker_issue (tenant_id, organization_id, type, status);
+
+CREATE INDEX IF NOT EXISTS idx_tracker_issue_milestone
+    ON github_tracker_issue (milestone_id);
+
+CREATE INDEX IF NOT EXISTS idx_tracker_comment_issue
+    ON github_tracker_comment (issue_id, created_at);
+
+CREATE INDEX IF NOT EXISTS idx_tracker_vote_issue
+    ON github_tracker_vote (issue_id, user_id);
+
+CREATE INDEX IF NOT EXISTS idx_tracker_roadmap_scope
+    ON github_tracker_roadmap (tenant_id, organization_id, status);
+
+CREATE INDEX IF NOT EXISTS idx_tracker_roadmap_item_roadmap
+    ON github_tracker_roadmap_item (roadmap_id, sort_order);

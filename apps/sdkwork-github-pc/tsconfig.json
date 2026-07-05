@@ -15,10 +15,10 @@
         "../../../sdkwork-utils/packages/sdkwork-utils-typescript/src/index.ts"
       ],
       "@sdkwork/iam-app-sdk": [
-        "../../../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/generated/server-openapi/src/index.ts"
+        "../../../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/src/index.ts"
       ],
       "@sdkwork/iam-backend-sdk": [
-        "../../../sdkwork-iam/sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript/generated/server-openapi/src/index.ts"
+        "../../../sdkwork-iam/sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript/src/index.ts"
       ],
       "@sdkwork/auth-pc-react": [
         "./src/bootstrap/sdkworkAuthPcReactShim.d.ts"
@@ -30,7 +30,7 @@
         "../../../sdkwork-core/sdkwork-core-pc-react/src/index.ts"
       ],
       "@sdkwork/github-app-sdk": [
-        "../../sdks/sdkwork-github-app-sdk/sdkwork-github-app-sdk-typescript/generated/server-openapi/src/index.ts"
+        "../../sdks/sdkwork-github-app-sdk/sdkwork-github-app-sdk-typescript/src/index.ts"
       ],
       "@sdkwork/iam-contracts": [
         "../../../sdkwork-iam/apps/sdkwork-iam-common/packages/sdkwork-iam-contracts/src/index.ts"

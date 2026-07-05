@@ -92,5 +92,26 @@
     }
   ],
   "dependencyApiExports": [],
-  "managedBy": "tools/github_sdk_generator_runner.mjs"
+  "managedBy": "tools/github_sdk_generator_runner.mjs",
+  "packageName": "@sdkwork/github-app-sdk",
+  "transportPackageName": "sdkwork-github-app-sdk-generated-typescript",
+  "typescript": {
+    "composedRoot": "sdkwork-github-app-sdk-typescript",
+    "composedEntry": "sdkwork-github-app-sdk-typescript/src/index.ts",
+    "transportRoot": "sdkwork-github-app-sdk-typescript/generated/server-openapi",
+    "transportEntry": "sdkwork-github-app-sdk-typescript/generated/server-openapi/src/index.ts"
+  },
+  "workspace": "sdkwork-github-app-sdk",
+  "authoritySpec": "../../apis/app-api/github/github-app-api.openapi.json",
+  "derivedSpecs": {
+    "default": "../../apis/app-api/github/github-app-api.openapi.json"
+  },
+  "discoverySurface": {
+    "sdkTarget": "app",
+    "apiPrefix": "/app/v3/api",
+    "generatedProtocols": [
+      "http-openapi"
+    ],
+    "manualTransports": []
+  }
 }

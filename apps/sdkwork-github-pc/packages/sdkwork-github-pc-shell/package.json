@@ -4,10 +4,15 @@
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    ".": "./src/App.tsx"
+    ".": {
+      "types": "./src/App.tsx",
+      "import": "./src/App.tsx",
+      "default": "./src/App.tsx"
+    }
   },
   "dependencies": {
     "@sdkwork/github-pc-core": "workspace:*",
+    "@sdkwork/github-pc-tracker": "workspace:*",
     "@sdkwork/github-pc-workspace": "workspace:*",
     "react": "catalog:",
     "react-router-dom": "catalog:"

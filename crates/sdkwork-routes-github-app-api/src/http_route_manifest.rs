@@ -2,7 +2,7 @@ use sdkwork_web_core::{HttpMethod, HttpRoute, HttpRouteManifest};
 
 const HTTP_ROUTES: &[HttpRoute] = &APP_HTTP_ROUTES;
 
-pub const APP_HTTP_ROUTES: [HttpRoute; 11] = [
+pub const APP_HTTP_ROUTES: [HttpRoute; 30] = [
     HttpRoute::dual_token(
         HttpMethod::Get,
         "/app/v3/api/github/repositories",
@@ -68,6 +68,121 @@ pub const APP_HTTP_ROUTES: [HttpRoute; 11] = [
         "/app/v3/api/github/integration/oauth/callback",
         "github",
         "integration.oauth.callback",
+    ),
+    // Tracker routes
+    HttpRoute::dual_token(
+        HttpMethod::Get,
+        "/app/v3/api/github/tracker/issues",
+        "github",
+        "tracker.issues.list",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Post,
+        "/app/v3/api/github/tracker/issues",
+        "github",
+        "tracker.issues.create",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Get,
+        "/app/v3/api/github/tracker/issues/:issue_id",
+        "github",
+        "tracker.issues.detail",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Patch,
+        "/app/v3/api/github/tracker/issues/:issue_id",
+        "github",
+        "tracker.issues.update",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Get,
+        "/app/v3/api/github/tracker/issues/:issue_id/comments",
+        "github",
+        "tracker.issues.comments.list",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Post,
+        "/app/v3/api/github/tracker/issues/:issue_id/comments",
+        "github",
+        "tracker.issues.comments.create",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Post,
+        "/app/v3/api/github/tracker/issues/:issue_id/votes",
+        "github",
+        "tracker.issues.votes.toggle",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Get,
+        "/app/v3/api/github/tracker/issues/:issue_id/votes/status",
+        "github",
+        "tracker.issues.votes.status",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Get,
+        "/app/v3/api/github/tracker/labels",
+        "github",
+        "tracker.labels.list",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Post,
+        "/app/v3/api/github/tracker/labels",
+        "github",
+        "tracker.labels.create",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Get,
+        "/app/v3/api/github/tracker/milestones",
+        "github",
+        "tracker.milestones.list",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Post,
+        "/app/v3/api/github/tracker/milestones",
+        "github",
+        "tracker.milestones.create",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Get,
+        "/app/v3/api/github/tracker/milestones/:milestone_id/issues",
+        "github",
+        "tracker.milestones.issues",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Get,
+        "/app/v3/api/github/tracker/roadmaps",
+        "github",
+        "tracker.roadmaps.list",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Post,
+        "/app/v3/api/github/tracker/roadmaps",
+        "github",
+        "tracker.roadmaps.create",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Get,
+        "/app/v3/api/github/tracker/roadmaps/:roadmap_id",
+        "github",
+        "tracker.roadmaps.detail",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Patch,
+        "/app/v3/api/github/tracker/roadmaps/:roadmap_id",
+        "github",
+        "tracker.roadmaps.update",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Post,
+        "/app/v3/api/github/tracker/roadmaps/:roadmap_id/items",
+        "github",
+        "tracker.roadmaps.items.add",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Delete,
+        "/app/v3/api/github/tracker/roadmaps/:roadmap_id/items/:item_id",
+        "github",
+        "tracker.roadmaps.items.remove",
     ),
 ];
 

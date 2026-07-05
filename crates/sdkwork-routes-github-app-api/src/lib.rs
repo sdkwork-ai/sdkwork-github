@@ -18,7 +18,12 @@ pub fn gateway_route_manifest() -> sdkwork_web_core::HttpRouteManifest {
 
 pub fn gateway_mount<S>(service: sdkwork_github_integration_service::GitHubIntegrationService<S>) -> axum::Router
 where
-    S: sdkwork_github_integration_service::ports::GitHubSyncStore + Clone + Send + Sync + 'static,
+    S: sdkwork_github_integration_service::ports::GitHubSyncStore
+        + sdkwork_github_integration_service::ports::TrackerStore
+        + Clone
+        + Send
+        + Sync
+        + 'static,
 {
     routes::build_router(service)
 }

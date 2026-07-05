@@ -111,12 +111,20 @@ impl ApiProblem {
         }
     }
 
+    pub fn not_found(message: impl Into<String>) -> Self {
+        Self {
+            message: message.into(),
+            status: StatusCode::NOT_FOUND,
+        }
+    }
+
     fn framework_error(&self) -> WebFrameworkError {
         let kind = match self.status {
             StatusCode::BAD_REQUEST => WebFrameworkErrorKind::BadRequest,
             StatusCode::UNAUTHORIZED => WebFrameworkErrorKind::MissingCredentials,
             StatusCode::BAD_GATEWAY => WebFrameworkErrorKind::DependencyUnavailable,
             StatusCode::SERVICE_UNAVAILABLE => WebFrameworkErrorKind::DependencyUnavailable,
+            StatusCode::NOT_FOUND => WebFrameworkErrorKind::NotFound,
             StatusCode::INTERNAL_SERVER_ERROR => WebFrameworkErrorKind::InternalServerError,
             _ => WebFrameworkErrorKind::InternalServerError,
         };

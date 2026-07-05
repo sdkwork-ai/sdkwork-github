@@ -33,7 +33,20 @@ async fn migrated_store() -> SqlGitHubStore {
 async fn install_schema(pool: DatabasePool) {
     let sqlite = pool.as_sqlite().expect("sqlite pool");
     let baseline = include_str!("../../../database/ddl/baseline/sqlite/0001_github_baseline.sql");
-    for statement in baseline.split(';').map(str::trim).filter(|value| !value.is_empty()) {
+    // Strip single-line SQL comments before splitting on semicolons to avoid
+    // breaking on semicolons that appear inside `-- ...` comment text.
+    let stripped: String = baseline
+        .lines()
+        .map(|line| {
+            if let Some(idx) = line.find("--") {
+                &line[..idx]
+            } else {
+                line
+            }
+        })
+        .collect::<Vec<_>>()
+        .join("\n");
+    for statement in stripped.split(';').map(str::trim).filter(|value| !value.is_empty()) {
         sqlx::query(statement)
             .execute(sqlite)
             .await

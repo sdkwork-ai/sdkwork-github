@@ -4,8 +4,14 @@ use crate::domain::{
     CatalogBootstrapResult, IntegrationStatus, Issue, LinkIntegrationCommand, Page, Plan,
     PlanItem, PlanView, Repository, SyncResult,
 };
+use crate::domain::{
+    CreateTrackerIssueCommand, CreateTrackerRoadmapItemCommand, MilestoneProgress,
+    TrackerComment, TrackerIssue, TrackerIssueQuery, TrackerIssueView, TrackerLabel,
+    TrackerMilestone, TrackerRoadmap, TrackerRoadmapItem, TrackerRoadmapItemView,
+    TrackerRoadmapView, UpdateTrackerIssueCommand,
+};
 use crate::error::ServiceError;
-use crate::ports::{GitHubStore, GitHubSyncStore};
+use crate::ports::{GitHubStore, GitHubSyncStore, TrackerStore};
 
 const GITHUB_PROVIDER: &str = "github";
 
@@ -515,6 +521,335 @@ impl<S: GitHubSyncStore> GitHubIntegrationService<S> {
             "GitHub integration is not linked; configure tenant OAuth/PAT linking before sync"
                 .to_string(),
         ))
+    }
+}
+
+// ════════════════════════════════════════════════════════
+// Tracker service methods
+// ════════════════════════════════════════════════════════
+
+impl<S: GitHubStore + TrackerStore> GitHubIntegrationService<S> {
+    pub async fn list_tracker_issues(
+        &self,
+        tenant_id: &str,
+        organization_id: &str,
+        query: &TrackerIssueQuery,
+        page: u32,
+        page_size: u32,
+    ) -> Result<Page<TrackerIssueView>, ServiceError> {
+        validate_scope(tenant_id, organization_id)?;
+        let page_result = self
+            .store
+            .list_tracker_issues(tenant_id, organization_id, query, page, page_size)
+            .await?;
+        let issue_ids: Vec<String> = page_result.items.iter().map(|i| i.id.clone()).collect();
+        let label_pairs = self.store.list_labels_for_issue_ids(&issue_ids).await?;
+        let mut labels_by_issue: std::collections::HashMap<String, Vec<TrackerLabel>> =
+            std::collections::HashMap::new();
+        for (issue_id, label) in label_pairs {
+            labels_by_issue.entry(issue_id).or_default().push(label);
+        }
+        let milestone_ids: Vec<String> = page_result
+            .items
+            .iter()
+            .filter_map(|i| i.milestone_id.clone())
+            .collect::<Vec<_>>();
+        let mut milestone_map: std::collections::HashMap<String, TrackerMilestone> =
+            std::collections::HashMap::new();
+        for mid in &milestone_ids {
+            if let Some(m) = self.store.get_milestone_for_issue(mid).await? {
+                milestone_map.insert(mid.clone(), m);
+            }
+        }
+        Ok(Page {
+            items: page_result
+                .items
+                .into_iter()
+                .map(|issue| {
+                    let labels = labels_by_issue.remove(&issue.id).unwrap_or_default();
+                    let milestone = issue
+                        .milestone_id
+                        .as_ref()
+                        .and_then(|mid| milestone_map.get(mid).cloned());
+                    TrackerIssueView {
+                        issue,
+                        labels,
+                        milestone,
+                    }
+                })
+                .collect(),
+            page: page_result.page,
+            page_size: page_result.page_size,
+            total: page_result.total,
+        })
+    }
+
+    pub async fn get_tracker_issue_detail(
+        &self,
+        tenant_id: &str,
+        organization_id: &str,
+        issue_id: &str,
+    ) -> Result<TrackerIssueView, ServiceError> {
+        validate_scope(tenant_id, organization_id)?;
+        let issue = self
+            .store
+            .get_tracker_issue(tenant_id, organization_id, issue_id)
+            .await?;
+        let label_pairs = self.store.list_labels_for_issue_ids(&[issue_id.to_string()]).await?;
+        let labels: Vec<TrackerLabel> = label_pairs.into_iter().map(|(_, l)| l).collect();
+        let milestone = if let Some(ref mid) = issue.milestone_id {
+            self.store.get_milestone_for_issue(mid).await?
+        } else {
+            None
+        };
+        Ok(TrackerIssueView {
+            issue,
+            labels,
+            milestone,
+        })
+    }
+
+    pub async fn create_tracker_issue(
+        &self,
+        tenant_id: &str,
+        organization_id: &str,
+        command: CreateTrackerIssueCommand,
+        submitted_by: &str,
+    ) -> Result<TrackerIssue, ServiceError> {
+        validate_scope(tenant_id, organization_id)?;
+        if command.title.trim().is_empty() {
+            return Err(ServiceError::Validation("title is required".to_string()));
+        }
+        if command.description.trim().is_empty() {
+            return Err(ServiceError::Validation("description is required".to_string()));
+        }
+        let valid_types = ["bug", "feature", "enhancement", "question", "task"];
+        if !valid_types.contains(&command.issue_type.as_str()) {
+            return Err(ServiceError::Validation(format!(
+                "invalid issue type: {}; expected one of {:?}",
+                command.issue_type, valid_types
+            )));
+        }
+        self.store
+            .create_tracker_issue(tenant_id, organization_id, &command, submitted_by)
+            .await
+    }
+
+    pub async fn update_tracker_issue(
+        &self,
+        tenant_id: &str,
+        organization_id: &str,
+        issue_id: &str,
+        command: UpdateTrackerIssueCommand,
+    ) -> Result<TrackerIssue, ServiceError> {
+        validate_scope(tenant_id, organization_id)?;
+        self.store
+            .update_tracker_issue(tenant_id, organization_id, issue_id, &command)
+            .await
+    }
+
+    pub async fn list_tracker_comments(
+        &self,
+        issue_id: &str,
+        page: u32,
+        page_size: u32,
+    ) -> Result<Page<TrackerComment>, ServiceError> {
+        self.store.list_tracker_comments(issue_id, page, page_size).await
+    }
+
+    pub async fn create_tracker_comment(
+        &self,
+        issue_id: &str,
+        author_id: &str,
+        content: &str,
+    ) -> Result<TrackerComment, ServiceError> {
+        if content.trim().is_empty() {
+            return Err(ServiceError::Validation("content is required".to_string()));
+        }
+        self.store.create_tracker_comment(issue_id, author_id, content).await
+    }
+
+    pub async fn toggle_tracker_vote(
+        &self,
+        issue_id: &str,
+        user_id: &str,
+    ) -> Result<bool, ServiceError> {
+        self.store.toggle_tracker_vote(issue_id, user_id).await
+    }
+
+    pub async fn has_voted(&self, issue_id: &str, user_id: &str) -> Result<bool, ServiceError> {
+        self.store.has_voted(issue_id, user_id).await
+    }
+
+    pub async fn list_tracker_labels(
+        &self,
+        tenant_id: &str,
+        organization_id: &str,
+    ) -> Result<Vec<TrackerLabel>, ServiceError> {
+        validate_scope(tenant_id, organization_id)?;
+        self.store.list_tracker_labels(tenant_id, organization_id).await
+    }
+
+    pub async fn create_tracker_label(
+        &self,
+        tenant_id: &str,
+        organization_id: &str,
+        name: &str,
+        color: &str,
+        description: Option<&str>,
+    ) -> Result<TrackerLabel, ServiceError> {
+        validate_scope(tenant_id, organization_id)?;
+        if name.trim().is_empty() {
+            return Err(ServiceError::Validation("label name is required".to_string()));
+        }
+        self.store
+            .create_tracker_label(tenant_id, organization_id, name, color, description)
+            .await
+    }
+
+    pub async fn list_tracker_milestones(
+        &self,
+        tenant_id: &str,
+        organization_id: &str,
+        status: Option<&str>,
+    ) -> Result<Vec<MilestoneProgress>, ServiceError> {
+        validate_scope(tenant_id, organization_id)?;
+        self.store
+            .list_tracker_milestones(tenant_id, organization_id, status)
+            .await
+    }
+
+    pub async fn create_tracker_milestone(
+        &self,
+        tenant_id: &str,
+        organization_id: &str,
+        title: &str,
+        description: Option<&str>,
+        due_date: Option<&str>,
+    ) -> Result<TrackerMilestone, ServiceError> {
+        validate_scope(tenant_id, organization_id)?;
+        if title.trim().is_empty() {
+            return Err(ServiceError::Validation("milestone title is required".to_string()));
+        }
+        self.store
+            .create_tracker_milestone(tenant_id, organization_id, title, description, due_date)
+            .await
+    }
+
+    pub async fn get_tracker_milestone_issues(
+        &self,
+        tenant_id: &str,
+        organization_id: &str,
+        milestone_id: &str,
+        page: u32,
+        page_size: u32,
+    ) -> Result<Page<TrackerIssue>, ServiceError> {
+        validate_scope(tenant_id, organization_id)?;
+        self.store
+            .get_tracker_milestone_issues(tenant_id, organization_id, milestone_id, page, page_size)
+            .await
+    }
+
+    pub async fn list_tracker_roadmaps(
+        &self,
+        tenant_id: &str,
+        organization_id: &str,
+        page: u32,
+        page_size: u32,
+    ) -> Result<Page<TrackerRoadmap>, ServiceError> {
+        validate_scope(tenant_id, organization_id)?;
+        self.store
+            .list_tracker_roadmaps(tenant_id, organization_id, page, page_size)
+            .await
+    }
+
+    pub async fn create_tracker_roadmap(
+        &self,
+        tenant_id: &str,
+        organization_id: &str,
+        title: &str,
+        description: Option<&str>,
+        start_date: Option<&str>,
+        target_date: Option<&str>,
+    ) -> Result<TrackerRoadmap, ServiceError> {
+        validate_scope(tenant_id, organization_id)?;
+        if title.trim().is_empty() {
+            return Err(ServiceError::Validation("roadmap title is required".to_string()));
+        }
+        self.store
+            .create_tracker_roadmap(tenant_id, organization_id, title, description, start_date, target_date)
+            .await
+    }
+
+    pub async fn get_tracker_roadmap_detail(
+        &self,
+        tenant_id: &str,
+        organization_id: &str,
+        roadmap_id: &str,
+    ) -> Result<TrackerRoadmapView, ServiceError> {
+        validate_scope(tenant_id, organization_id)?;
+        let roadmap = self
+            .store
+            .get_tracker_roadmap(tenant_id, organization_id, roadmap_id)
+            .await?;
+        let items = self.store.list_tracker_roadmap_items(roadmap_id).await?;
+        let issue_ids: Vec<String> = items.iter().map(|i| i.issue_id.clone()).collect();
+        let label_pairs = self.store.list_labels_for_issue_ids(&issue_ids).await?;
+        let mut labels_by_issue: std::collections::HashMap<String, Vec<TrackerLabel>> =
+            std::collections::HashMap::new();
+        for (issue_id, label) in label_pairs {
+            labels_by_issue.entry(issue_id).or_default().push(label);
+        }
+        let mut item_views = Vec::with_capacity(items.len());
+        for item in items {
+            let issue = self
+                .store
+                .get_tracker_issue(tenant_id, organization_id, &item.issue_id)
+                .await?;
+            let labels = labels_by_issue.remove(&item.issue_id).unwrap_or_default();
+            item_views.push(TrackerRoadmapItemView {
+                item,
+                issue,
+                labels,
+            });
+        }
+        Ok(TrackerRoadmapView {
+            roadmap,
+            items: item_views,
+        })
+    }
+
+    pub async fn update_tracker_roadmap(
+        &self,
+        tenant_id: &str,
+        organization_id: &str,
+        roadmap_id: &str,
+        title: Option<&str>,
+        description: Option<Option<&str>>,
+        status: Option<&str>,
+        start_date: Option<Option<&str>>,
+        target_date: Option<Option<&str>>,
+    ) -> Result<TrackerRoadmap, ServiceError> {
+        validate_scope(tenant_id, organization_id)?;
+        self.store
+            .update_tracker_roadmap(tenant_id, organization_id, roadmap_id, title, description, status, start_date, target_date)
+            .await
+    }
+
+    pub async fn add_tracker_roadmap_item(
+        &self,
+        roadmap_id: &str,
+        command: CreateTrackerRoadmapItemCommand,
+    ) -> Result<TrackerRoadmapItem, ServiceError> {
+        self.store.add_tracker_roadmap_item(roadmap_id, &command).await
+    }
+
+    pub async fn remove_tracker_roadmap_item(
+        &self,
+        roadmap_id: &str,
+        item_id: &str,
+    ) -> Result<(), ServiceError> {
+        self.store.remove_tracker_roadmap_item(roadmap_id, item_id).await
     }
 }
 

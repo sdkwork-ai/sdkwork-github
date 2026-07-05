@@ -6,6 +6,12 @@ import {
   RepositoriesPage,
   WorkspaceShell,
 } from '@sdkwork/github-pc-workspace';
+import {
+  TrackerIssuesPage,
+  TrackerIssueDetailPage,
+  TrackerRoadmapPage,
+  TrackerMilestonesPage,
+} from '@sdkwork/github-pc-tracker';
 
 export function AppShell() {
   return (
@@ -16,6 +22,11 @@ export function AppShell() {
         <Route path="issues" element={<IssuesPage />} />
         <Route path="plans" element={<PlansPage />} />
         <Route path="integration" element={<IntegrationPage />} />
+        {/* Tracker routes */}
+        <Route path="tracker/issues" element={<TrackerIssuesPage />} />
+        <Route path="tracker/issues/:issueId" element={<TrackerIssueDetailPage />} />
+        <Route path="tracker/roadmap" element={<TrackerRoadmapPage />} />
+        <Route path="tracker/milestones" element={<TrackerMilestonesPage />} />
       </Route>
     </Routes>
   );

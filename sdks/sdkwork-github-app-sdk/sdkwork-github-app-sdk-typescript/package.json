@@ -4,9 +4,16 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./generated/server-openapi/src/index.ts"
+    ".": {
+      "types": "./generated/server-openapi/src/index.ts",
+      "import": "./generated/server-openapi/src/index.ts",
+      "default": "./generated/server-openapi/src/index.ts"
+    }
   },
   "dependencies": {
     "@sdkwork/sdk-common": "^1.0.2"
-  }
+  },
+  "main": "./generated/server-openapi/src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts"
 }

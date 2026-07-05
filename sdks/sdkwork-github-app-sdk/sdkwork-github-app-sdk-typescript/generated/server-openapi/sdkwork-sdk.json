@@ -26,5 +26,7 @@
     "stateRoots": [
       ".sdkwork/"
     ]
-  }
+  },
+  "transportPackageName": "sdkwork-github-app-sdk-generated-typescript",
+  "consumerPackageName": "@sdkwork/github-app-sdk"
 }

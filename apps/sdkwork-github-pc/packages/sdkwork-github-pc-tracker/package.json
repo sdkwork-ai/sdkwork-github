@@ -1,13 +1,13 @@
 {
-  "name": "@sdkwork/github-pc-workspace",
+  "name": "@sdkwork/github-pc-tracker",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "main": "./src/index.tsx",
   "dependencies": {
     "@sdkwork/github-pc-core": "workspace:*",
-    "@sdkwork/utils": "workspace:*",
-    "react": "^19.1.0"
+    "react": "^19.1.0",
+    "react-router-dom": "^7.5.0"
   },
   "devDependencies": {
     "@types/react": "^19.1.2",

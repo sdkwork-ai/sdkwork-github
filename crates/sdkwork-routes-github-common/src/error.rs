@@ -8,5 +8,6 @@ pub fn map_service_error(error: ServiceError) -> ApiProblem {
         ServiceError::Configuration(message) => ApiProblem::unavailable(message),
         ServiceError::Integration(message) => ApiProblem::bad_gateway(message),
         ServiceError::Repository(message) => ApiProblem::internal_server_error(message),
+        ServiceError::NotFound(message) => ApiProblem::not_found(message),
     }
 }
