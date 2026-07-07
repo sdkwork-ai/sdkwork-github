@@ -1,5 +1,6 @@
-import type { SdkworkAppClient } from '@sdkwork/github-app-sdk';
-import type { SessionSnapshot } from '@sdkwork/github-pc-core';
+import type { GithubAppSdkClient, SessionSnapshot } from '@sdkwork/github-pc-core';
+
+type GithubWorkspaceSdkClient = GithubAppSdkClient['client'];
 
 function resolveScope(context: SessionSnapshot['context']) {
   if (!context?.tenantId) {
@@ -12,7 +13,7 @@ function resolveScope(context: SessionSnapshot['context']) {
 }
 
 export async function listRepositories(
-  client: SdkworkAppClient,
+  client: GithubWorkspaceSdkClient,
   context: SessionSnapshot['context'],
   page = 1,
   pageSize = 20,
@@ -26,7 +27,7 @@ export async function listRepositories(
 }
 
 export async function listIssues(
-  client: SdkworkAppClient,
+  client: GithubWorkspaceSdkClient,
   context: SessionSnapshot['context'],
   repositoryId?: string,
   page = 1,
@@ -42,7 +43,7 @@ export async function listIssues(
 }
 
 export async function syncRepositories(
-  client: SdkworkAppClient,
+  client: GithubWorkspaceSdkClient,
   context: SessionSnapshot['context'],
 ) {
   const scope = resolveScope(context);
@@ -50,7 +51,7 @@ export async function syncRepositories(
 }
 
 export async function syncIssues(
-  client: SdkworkAppClient,
+  client: GithubWorkspaceSdkClient,
   context: SessionSnapshot['context'],
   repositoryId?: string,
 ) {
@@ -62,7 +63,7 @@ export async function syncIssues(
 }
 
 export async function getIntegrationStatus(
-  client: SdkworkAppClient,
+  client: GithubWorkspaceSdkClient,
   context: SessionSnapshot['context'],
 ) {
   const scope = resolveScope(context);
@@ -70,7 +71,7 @@ export async function getIntegrationStatus(
 }
 
 export async function linkIntegration(
-  client: SdkworkAppClient,
+  client: GithubWorkspaceSdkClient,
   context: SessionSnapshot['context'],
   accessToken: string,
   externalAccountId?: string,
@@ -86,7 +87,7 @@ export async function linkIntegration(
 }
 
 export async function unlinkIntegration(
-  client: SdkworkAppClient,
+  client: GithubWorkspaceSdkClient,
   context: SessionSnapshot['context'],
 ) {
   const scope = resolveScope(context);
@@ -94,7 +95,7 @@ export async function unlinkIntegration(
 }
 
 export async function beginOAuthIntegration(
-  client: SdkworkAppClient,
+  client: GithubWorkspaceSdkClient,
   context: SessionSnapshot['context'],
 ) {
   const scope = resolveScope(context);
@@ -102,7 +103,7 @@ export async function beginOAuthIntegration(
 }
 
 export async function listPlans(
-  client: SdkworkAppClient,
+  client: GithubWorkspaceSdkClient,
   context: SessionSnapshot['context'],
   page = 1,
   pageSize = 20,
@@ -116,7 +117,7 @@ export async function listPlans(
 }
 
 export async function bootstrapNotableCatalog(
-  client: SdkworkAppClient,
+  client: GithubWorkspaceSdkClient,
   context: SessionSnapshot['context'],
 ) {
   const scope = resolveScope(context);
