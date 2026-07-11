@@ -2,6 +2,7 @@
 
 pub const ROUTE_CRATE_COUNT: usize = 2;
 
+#[allow(dead_code)]
 pub const ROUTE_CRATE_PACKAGES: &[&str] = &[
     "sdkwork-routes-github-app-api",
     "sdkwork-routes-github-backend-api",

@@ -4,7 +4,7 @@
   "applicationCode": "github",
   "packageName": "sdkwork-github-gateway-assembly",
   "crateDir": "crates/sdkwork-github-gateway-assembly",
-  "generatedAt": "2026-06-25T13:14:32.611Z",
+  "generatedAt": "2026-07-08T01:33:38.315Z",
   "routeCrates": [
     {
       "packageName": "sdkwork-routes-github-app-api",

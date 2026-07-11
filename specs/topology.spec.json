@@ -1,17 +1,11 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 4,
   "kind": "sdkwork.app.topology",
   "appId": "sdkwork-github",
   "archetype": "application-http-gateway",
   "profileRoot": "configs/topology",
-  "profilePattern": "{deploymentProfile}.{serviceLayout}.{environment}.env",
+  "profilePattern": "{deploymentProfile}.{environment}.env",
   "vocabulary": {
-    "serviceLayout": {
-      "allowed": [
-        "unified-process",
-        "split-services"
-      ]
-    },
     "environment": {
       "allowed": [
         "development",
@@ -26,19 +20,18 @@
     }
   },
   "defaults": {
-    "developmentProfileId": "standalone.unified-process.development",
-    "productionProfileId": "cloud.split-services.production",
-    "gatewayBind": "127.0.0.1:4100"
+    "developmentProfileId": "standalone.development",
+    "productionProfileId": "cloud.production",
+    "gatewayBind": "127.0.0.1:4100",
+    "desktopBuildProfileId": "standalone.production"
   },
   "profileFiles": {
-    "standalone.unified-process.development": "configs/topology/standalone.unified-process.development.env",
-    "cloud.split-services.production": "configs/topology/cloud.split-services.production.env",
-    "standalone.unified-process.production": "configs/topology/standalone.unified-process.production.env",
-    "standalone.split-services.development": "configs/topology/standalone.split-services.development.env",
-    "cloud.split-services.development": "configs/topology/cloud.split-services.development.env"
+    "standalone.development": "configs/topology/standalone.development.env",
+    "cloud.production": "configs/topology/cloud.production.env",
+    "standalone.production": "configs/topology/standalone.production.env",
+    "cloud.development": "configs/topology/cloud.development.env"
   },
   "envKeys": {
-    "serviceLayout": "SDKWORK_GITHUB_SERVICE_LAYOUT",
     "environment": "SDKWORK_GITHUB_ENVIRONMENT",
     "profileId": "SDKWORK_GITHUB_PROFILE_ID",
     "standaloneGatewayBind": "SDKWORK_GITHUB_APPLICATION_PUBLIC_INGRESS_BIND",
@@ -99,7 +92,7 @@
   },
   "orchestration": {
     "profiles": {
-      "standalone.unified-process.development": {
+      "standalone.development": {
         "processes": [
           {
             "id": "application.public-ingress",
@@ -112,7 +105,7 @@
           "application.public-ingress"
         ]
       },
-      "cloud.split-services.development": {
+      "cloud.development": {
         "processes": [
           {
             "id": "platform.api-gateway",
@@ -133,7 +126,7 @@
           "platform.api-gateway"
         ]
       },
-      "cloud.split-services.production": {
+      "cloud.production": {
         "processes": [
           {
             "id": "platform.api-gateway",
@@ -152,6 +145,19 @@
         "healthSurfaces": [
           "application.public-ingress",
           "platform.api-gateway"
+        ]
+      },
+      "standalone.production": {
+        "processes": [
+          {
+            "id": "application.public-ingress",
+            "crate": "sdkwork-github-standalone-gateway",
+            "binary": "sdkwork-github-standalone-gateway",
+            "required": true
+          }
+        ],
+        "healthSurfaces": [
+          "application.public-ingress"
         ]
       }
     }
