@@ -1,47 +1,9 @@
 use axum::Router;
-use axum::http::{HeaderValue, Method};
-use tower_http::cors::{AllowHeaders, AllowMethods, AllowOrigin, CorsLayer};
 
 use crate::bootstrap::auth::build_protected_router;
 use crate::bootstrap::database::build_github_bootstrap;
 use crate::health::{http_metrics_registry, ready_check};
 use sdkwork_web_bootstrap::{service_router, ServiceRouterConfig};
-
-fn build_cors_layer() -> CorsLayer {
-    let allowed_origins = std::env::var("SDKWORK_GITHUB_CORS_ALLOWED_ORIGINS")
-        .unwrap_or_else(|_| "http://127.0.0.1:5175,http://localhost:5175".to_string());
-    let origins: Vec<HeaderValue> = allowed_origins
-        .split(',')
-        .filter_map(|value| {
-            let trimmed = value.trim();
-            if trimmed.is_empty() {
-                None
-            } else {
-                HeaderValue::from_str(trimmed).ok()
-            }
-        })
-        .collect();
-
-    let mut layer = CorsLayer::new()
-        .allow_methods(AllowMethods::list([
-            Method::GET,
-            Method::POST,
-            Method::PUT,
-            Method::PATCH,
-            Method::DELETE,
-            Method::OPTIONS,
-        ]))
-        .allow_headers(AllowHeaders::any())
-        .allow_credentials(true);
-
-    layer = if origins.is_empty() {
-        layer.allow_origin(AllowOrigin::mirror_request())
-    } else {
-        layer.allow_origin(AllowOrigin::list(origins))
-    };
-
-    layer
-}
 
 pub async fn build_router() -> Result<Router, Box<dyn std::error::Error + Send + Sync>> {
     let bootstrap = build_github_bootstrap()
@@ -61,14 +23,22 @@ pub async fn build_router() -> Result<Router, Box<dyn std::error::Error + Send +
         .await
         .map_err(|error| -> Box<dyn std::error::Error + Send + Sync> { error.into() })?;
 
-    let domain = sdkwork_github_gateway_assembly::assemble_application_business_router(service.clone()).router;
+    let domain =
+        sdkwork_github_gateway_assembly::assemble_application_business_router(service.clone())
+            .router;
 
     let protected = build_protected_router(domain).await;
 
     let business = Router::new()
         .merge(iam_router)
         .merge(build_protected_router(protected).await)
-        .layer(build_cors_layer());
+        .layer(sdkwork_web_bootstrap::application_cors_layer_from_env(
+            &["SDKWORK_GITHUB_ENVIRONMENT", "GITHUB_ENVIRONMENT"],
+            &[
+                "SDKWORK_GITHUB_CORS_ALLOWED_ORIGINS",
+                "SDKWORK_CORS_ALLOWED_ORIGINS",
+            ],
+        ));
 
     Ok(service_router(
         business,
