@@ -62,7 +62,7 @@
     {
       "method": "GET",
       "path": "/app/v3/api/github/integration",
-      "operationId": "integration.status",
+      "operationId": "integration.list",
       "domain": "github",
       "authMode": "dual-token",
       "requestContext": "WebRequestContext",
@@ -71,7 +71,7 @@
     {
       "method": "POST",
       "path": "/app/v3/api/github/integration",
-      "operationId": "integration.link",
+      "operationId": "integration.create",
       "domain": "github",
       "authMode": "dual-token",
       "requestContext": "WebRequestContext",
@@ -80,7 +80,7 @@
     {
       "method": "DELETE",
       "path": "/app/v3/api/github/integration",
-      "operationId": "integration.unlink",
+      "operationId": "integration.delete",
       "domain": "github",
       "authMode": "dual-token",
       "requestContext": "WebRequestContext",
@@ -125,7 +125,7 @@
     {
       "method": "GET",
       "path": "/app/v3/api/github/tracker/issues/{issue_id}",
-      "operationId": "tracker.issues.detail",
+      "operationId": "tracker.issues.retrieve",
       "domain": "github",
       "authMode": "dual-token",
       "requestContext": "WebRequestContext",
@@ -161,7 +161,7 @@
     {
       "method": "POST",
       "path": "/app/v3/api/github/tracker/issues/{issue_id}/votes",
-      "operationId": "tracker.issues.votes.toggle",
+      "operationId": "tracker.issues.votes.create",
       "domain": "github",
       "authMode": "dual-token",
       "requestContext": "WebRequestContext",
@@ -170,7 +170,7 @@
     {
       "method": "GET",
       "path": "/app/v3/api/github/tracker/issues/{issue_id}/votes/status",
-      "operationId": "tracker.issues.votes.status",
+      "operationId": "tracker.issues.votes.retrieve",
       "domain": "github",
       "authMode": "dual-token",
       "requestContext": "WebRequestContext",
@@ -215,7 +215,7 @@
     {
       "method": "GET",
       "path": "/app/v3/api/github/tracker/milestones/{milestone_id}/issues",
-      "operationId": "tracker.milestones.issues",
+      "operationId": "tracker.milestones.list",
       "domain": "github",
       "authMode": "dual-token",
       "requestContext": "WebRequestContext",
@@ -242,7 +242,7 @@
     {
       "method": "GET",
       "path": "/app/v3/api/github/tracker/roadmaps/{roadmap_id}",
-      "operationId": "tracker.roadmaps.detail",
+      "operationId": "tracker.roadmaps.retrieve",
       "domain": "github",
       "authMode": "dual-token",
       "requestContext": "WebRequestContext",
@@ -260,7 +260,7 @@
     {
       "method": "POST",
       "path": "/app/v3/api/github/tracker/roadmaps/{roadmap_id}/items",
-      "operationId": "tracker.roadmaps.items.add",
+      "operationId": "tracker.roadmaps.items.create",
       "domain": "github",
       "authMode": "dual-token",
       "requestContext": "WebRequestContext",
@@ -269,7 +269,7 @@
     {
       "method": "DELETE",
       "path": "/app/v3/api/github/tracker/roadmaps/{roadmap_id}/items/{item_id}",
-      "operationId": "tracker.roadmaps.items.remove",
+      "operationId": "tracker.roadmaps.items.delete",
       "domain": "github",
       "authMode": "dual-token",
       "requestContext": "WebRequestContext",

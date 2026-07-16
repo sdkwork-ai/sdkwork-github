@@ -486,7 +486,7 @@
     "/app/v3/api/github/integration": {
       "get": {
         "summary": "Get GitHub integration link status.",
-        "operationId": "integration.status",
+        "operationId": "integration.list",
         "tags": [
           "github"
         ],
@@ -552,7 +552,7 @@
       },
       "post": {
         "summary": "Link GitHub integration credentials for the current tenant scope.",
-        "operationId": "integration.link",
+        "operationId": "integration.create",
         "tags": [
           "github"
         ],
@@ -581,7 +581,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Integration status after linking.",
             "content": {
               "application/json": {
@@ -628,7 +628,7 @@
       },
       "delete": {
         "summary": "Revoke linked GitHub integration credentials.",
-        "operationId": "integration.unlink",
+        "operationId": "integration.delete",
         "tags": [
           "github"
         ],
@@ -647,38 +647,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Integration status after unlinking.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "object",
-                          "required": [
-                            "item"
-                          ],
-                          "properties": {
-                            "item": {
-                              "$ref": "#/components/schemas/IntegrationStatus"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
+          "204": {
+            "description": "Integration status after unlinking."
           },
           "default": {
             "$ref": "#/components/responses/ProblemDetailResponse"
@@ -955,7 +925,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Success.",
             "content": {
               "application/json": {
@@ -1006,7 +976,7 @@
     "/app/v3/api/github/tracker/issues/{issue_id}": {
       "get": {
         "summary": "Get tracker issue detail.",
-        "operationId": "tracker.issues.detail",
+        "operationId": "tracker.issues.retrieve",
         "tags": [
           "github"
         ],
@@ -1253,7 +1223,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Success.",
             "content": {
               "application/json": {
@@ -1304,7 +1274,7 @@
     "/app/v3/api/github/tracker/issues/{issue_id}/votes": {
       "post": {
         "summary": "Toggle vote on a tracker issue.",
-        "operationId": "tracker.issues.votes.toggle",
+        "operationId": "tracker.issues.votes.create",
         "tags": [
           "github"
         ],
@@ -1325,7 +1295,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Success.",
             "content": {
               "application/json": {
@@ -1366,7 +1336,7 @@
     "/app/v3/api/github/tracker/issues/{issue_id}/votes/status": {
       "get": {
         "summary": "Check if current user has voted.",
-        "operationId": "tracker.issues.votes.status",
+        "operationId": "tracker.issues.votes.retrieve",
         "tags": [
           "github"
         ],
@@ -1505,7 +1475,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Success.",
             "content": {
               "application/json": {
@@ -1633,7 +1603,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Success.",
             "content": {
               "application/json": {
@@ -1684,7 +1654,7 @@
     "/app/v3/api/github/tracker/milestones/{milestone_id}/issues": {
       "get": {
         "summary": "List issues in a milestone.",
-        "operationId": "tracker.milestones.issues",
+        "operationId": "tracker.milestones.list",
         "tags": [
           "github"
         ],
@@ -1873,7 +1843,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Success.",
             "content": {
               "application/json": {
@@ -1924,7 +1894,7 @@
     "/app/v3/api/github/tracker/roadmaps/{roadmap_id}": {
       "get": {
         "summary": "Get tracker roadmap detail with items.",
-        "operationId": "tracker.roadmaps.detail",
+        "operationId": "tracker.roadmaps.retrieve",
         "tags": [
           "github"
         ],
@@ -2068,7 +2038,7 @@
     "/app/v3/api/github/tracker/roadmaps/{roadmap_id}/items": {
       "post": {
         "summary": "Add an issue to a roadmap.",
-        "operationId": "tracker.roadmaps.items.add",
+        "operationId": "tracker.roadmaps.items.create",
         "tags": [
           "github"
         ],
@@ -2089,7 +2059,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Success.",
             "content": {
               "application/json": {
@@ -2140,7 +2110,7 @@
     "/app/v3/api/github/tracker/roadmaps/{roadmap_id}/items/{item_id}": {
       "delete": {
         "summary": "Remove an item from a roadmap.",
-        "operationId": "tracker.roadmaps.items.remove",
+        "operationId": "tracker.roadmaps.items.delete",
         "tags": [
           "github"
         ],
@@ -2169,30 +2139,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Success.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SdkWorkApiResponse"
-                    },
-                    {
-                      "type": "object",
-                      "required": [
-                        "data"
-                      ],
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/SdkWorkCommandData"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
+          "204": {
+            "description": "Success."
           },
           "default": {
             "$ref": "#/components/responses/ProblemDetailResponse"

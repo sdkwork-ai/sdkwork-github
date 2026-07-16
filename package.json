@@ -8,7 +8,7 @@
     "@sdkwork/app-topology": "workspace:*"
   },
   "scripts": {
-    "dev": "node scripts/github-dev.mjs --runtime-target browser --database sqlite --service-layout unified-process --deployment-profile standalone",
+    "stop": "node ../sdkwork-specs/tools/stop-sdkwork-workspace-processes.mjs --workspace .",    "dev": "node scripts/github-dev.mjs --runtime-target browser --database sqlite --service-layout unified-process --deployment-profile standalone",
     "build": "cargo build --workspace",
     "test": "pnpm topology:validate && pnpm test:contracts && pnpm test:contract:database && pnpm test:iam-application-bootstrap-standard",
     "check": "pnpm run check:app-composition && cargo check --workspace && pnpm check:pnpm-script-standard && pnpm check:architecture-alignment && pnpm topology:validate && pnpm db:validate && pnpm api:materialize:check && pnpm sdk:generate:check && pnpm api:check && pnpm typecheck",
