@@ -1,0 +1,32 @@
+{
+  "kind": "sdkwork.api.assembly",
+  "schemaVersion": 1,
+  "applicationCode": "github",
+  "apiMode": "served",
+  "packageName": "sdkwork-api-github-assembly",
+  "crateDir": "crates/sdkwork-api-github-assembly",
+  "routeCrates": [
+    {
+      "packageName": "sdkwork-routes-github-app-api",
+      "memberDir": "crates/sdkwork-routes-github-app-api",
+      "libName": "sdkwork_routes_github_app_api",
+      "surface": "app-api",
+      "pathPrefix": null,
+      "mountOrder": 0,
+      "componentRef": "crates/sdkwork-routes-github-app-api/specs/component.spec.json",
+      "routeManifestRef": "crates/sdkwork-routes-github-app-api/sdks/_route-manifests/app-api/sdkwork-routes-github-app-api.route-manifest.json",
+      "sourceRef": "crates/sdkwork-routes-github-app-api/Cargo.toml"
+    },
+    {
+      "packageName": "sdkwork-routes-github-backend-api",
+      "memberDir": "crates/sdkwork-routes-github-backend-api",
+      "libName": "sdkwork_routes_github_backend_api",
+      "surface": "backend-api",
+      "pathPrefix": null,
+      "mountOrder": 1,
+      "componentRef": "crates/sdkwork-routes-github-backend-api/specs/component.spec.json",
+      "routeManifestRef": "crates/sdkwork-routes-github-backend-api/sdks/_route-manifests/backend-api/sdkwork-routes-github-backend-api.route-manifest.json",
+      "sourceRef": "crates/sdkwork-routes-github-backend-api/Cargo.toml"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+[package]
+name = "sdkwork-api-github-assembly"
+edition.workspace = true
+version.workspace = true
+description = "Generated API assembly for sdkwork-github application HTTP plane."
+
+[lib]
+name = "sdkwork_api_github_assembly"
+path = "src/lib.rs"
+
+[dependencies]
+axum.workspace = true
+tokio.workspace = true
+sdkwork-routes-github-app-api.workspace = true
+sdkwork-routes-github-backend-api.workspace = true
