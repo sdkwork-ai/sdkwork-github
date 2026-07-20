@@ -24,7 +24,7 @@ pub async fn build_router() -> Result<Router, Box<dyn std::error::Error + Send +
         .map_err(|error| -> Box<dyn std::error::Error + Send + Sync> { error.into() })?;
 
     let domain =
-        sdkwork_api_github_assembly::assemble_business_router(service.clone())
+        sdkwork_api_github_assembly::assemble_api_router(service.clone())
             .router;
 
     let protected = build_protected_router(domain).await;

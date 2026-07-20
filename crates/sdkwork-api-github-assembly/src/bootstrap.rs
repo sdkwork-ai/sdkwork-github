@@ -9,7 +9,7 @@ pub struct ApiAssembly {
     pub router: Router,
 }
 
-pub fn assemble_business_router<S>(service: GitHubIntegrationService<S>) -> ApiAssembly
+pub fn assemble_api_router<S>(service: GitHubIntegrationService<S>) -> ApiAssembly
 where
     S: GitHubSyncStore + TrackerStore + Clone + Send + Sync + 'static,
 {
