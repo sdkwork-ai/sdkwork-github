@@ -31,7 +31,7 @@ const env = mergeRepoDevBootstrapAccessTokenEnv({
   },
 });
 
-const api = spawn('cargo', ['run', '-p', 'sdkwork-github-standalone-gateway'], {
+const api = spawn('cargo', ['run', '-p', 'sdkwork-api-github-standalone-gateway'], {
   cwd: root,
   env: { ...process.env, ...env },
   stdio: 'inherit',

@@ -26,7 +26,7 @@ const API_INPUTS = [
 const WEB_FRAMEWORK_CRATES = [
   'crates/sdkwork-routes-github-app-api/Cargo.toml',
   'crates/sdkwork-routes-github-backend-api/Cargo.toml',
-  'crates/sdkwork-github-standalone-gateway/Cargo.toml',
+  'crates/sdkwork-api-github-standalone-gateway/Cargo.toml',
 ];
 
 function read(relativePath) {
@@ -70,7 +70,7 @@ test('integrates sdkwork-web-framework in HTTP route crates and standalone-gatew
   for (const cargoPath of WEB_FRAMEWORK_CRATES) {
     assert.match(read(cargoPath), /sdkwork-web-/);
   }
-  assert.match(read('crates/sdkwork-github-standalone-gateway/src/bootstrap/auth.rs'), /wrap_router_with_web_framework_from_env/);
+  assert.match(read('crates/sdkwork-api-github-standalone-gateway/src/bootstrap/auth.rs'), /wrap_router_with_web_framework_from_env/);
 });
 
 test('integrates sdkwork-utils in Rust crates and PC commons', () => {
@@ -89,8 +89,8 @@ test('integrates sdkwork-utils in Rust crates and PC commons', () => {
 });
 
 test('integrates sdkwork-database lifecycle host in standalone-gateway bootstrap', () => {
-  assert.match(read('crates/sdkwork-github-standalone-gateway/Cargo.toml'), /sdkwork-github-database-host/);
-  assert.match(read('crates/sdkwork-github-standalone-gateway/src/bootstrap/database.rs'), /bootstrap_github_database_from_env/);
+  assert.match(read('crates/sdkwork-api-github-standalone-gateway/Cargo.toml'), /sdkwork-github-database-host/);
+  assert.match(read('crates/sdkwork-api-github-standalone-gateway/src/bootstrap/database.rs'), /bootstrap_github_database_from_env/);
   assert.equal(exists('crates/sdkwork-github-database-host/src/lib.rs'), true);
   assert.equal(exists('database/database.manifest.json'), true);
 });
@@ -158,8 +158,8 @@ test('PC application root follows apps/sdkwork-github-pc layout', () => {
 });
 
 test('declares production readiness and OAuth alignment surfaces', () => {
-  assert.match(read('crates/sdkwork-github-standalone-gateway/src/health.rs'), /ready_check/);
-  assert.match(read('crates/sdkwork-github-standalone-gateway/src/health.rs'), /metrics_snapshot/);
+  assert.match(read('crates/sdkwork-api-github-standalone-gateway/src/health.rs'), /ready_check/);
+  assert.match(read('crates/sdkwork-api-github-standalone-gateway/src/health.rs'), /metrics_snapshot/);
   assert.match(read('apis/app-api/github/github-app-api.openapi.json'), /integration\.oauth\.begin/);
   assert.match(read('apis/app-api/github/github-app-api.openapi.json'), /catalog\.bootstrap/);
   assert.equal(exists('database/ddl/baseline/sqlite/0001_github_baseline.sql'), true);
@@ -172,7 +172,7 @@ test('declares production readiness and OAuth alignment surfaces', () => {
     true,
   );
   assert.equal(exists('configs/topology/cloud.split-services.production.env'), true);
-  assert.match(read('crates/sdkwork-github-standalone-gateway/src/http_route_manifest.rs'), /APP_HTTP_ROUTES/);
+  assert.match(read('crates/sdkwork-api-github-standalone-gateway/src/http_route_manifest.rs'), /APP_HTTP_ROUTES/);
   assert.match(read('crates/sdkwork-github-integration-provider-github/src/client.rs'), /fetch_current_user/);
   assert.match(read('crates/sdkwork-github-integration-provider-github/src/public_api.rs'), /GitHubPublicApiClient/);
   assert.match(read('crates/sdkwork-github-integration-service/src/service.rs'), /bootstrap_notable_catalog/);

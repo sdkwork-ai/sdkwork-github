@@ -1,6 +1,7 @@
 [workspace]
 members = [
-    "crates/sdkwork-github-gateway-assembly",
+    "crates/sdkwork-api-github-assembly",
+    "crates/sdkwork-api-github-assembly",
     "crates/sdkwork-github-integration-service",
     "crates/sdkwork-github-integration-repository-sqlx",
     "crates/sdkwork-github-integration-provider-github",
@@ -8,7 +9,7 @@ members = [
     "crates/sdkwork-routes-github-common",
     "crates/sdkwork-routes-github-app-api",
     "crates/sdkwork-routes-github-backend-api",
-    "crates/sdkwork-github-standalone-gateway",
+    "crates/sdkwork-api-github-standalone-gateway",
 ]
 resolver = "2"
 

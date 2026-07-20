@@ -1,15 +1,15 @@
 [package]
-name = "sdkwork-github-standalone-gateway"
+name = "sdkwork-api-github-standalone-gateway"
 version.workspace = true
 edition.workspace = true
 
 
 [[bin]]
-name = "sdkwork-github-standalone-gateway"
+name = "sdkwork-api-github-standalone-gateway"
 path = "src/main.rs"
 
 [dependencies]
-sdkwork_github_gateway_assembly = { package = "sdkwork-github-gateway-assembly", path = "../sdkwork-github-gateway-assembly" }
+sdkwork_api_github_assembly = { package = "sdkwork-api-github-assembly", path = "../sdkwork-api-github-assembly" }
 axum.workspace = true
 tokio.workspace = true
 serde.workspace = true

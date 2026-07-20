@@ -33,8 +33,8 @@ Architecture detail lives in the linked TECH shards below.
 - `sdkwork-github-integration-provider-github`: GitHub REST API and OAuth client.
 - `sdkwork-routes-github-app-api`: Axum route handlers, DTOs, route manifest.
 - `sdkwork-routes-github-common`: Shared response helpers (`ApiProblem`, `finish_api_json`, `item_data`, `list_page_data`).
-- `sdkwork-github-gateway-assembly`: Gateway bootstrap and router assembly.
-- `sdkwork-github-standalone-gateway`: Standalone binary entry point.
+- `sdkwork-api-github-assembly`: Gateway bootstrap and router assembly.
+- `sdkwork-api-github-standalone-gateway`: Standalone binary entry point.
 
 ### Frontend Packages
 
@@ -53,8 +53,8 @@ sdkwork-github/
     sdkwork-github-integration-provider-github/ # GitHub provider
     sdkwork-routes-github-app-api/            # API handlers + routes
     sdkwork-routes-github-common/             # Shared response helpers
-    sdkwork-github-gateway-assembly/          # Gateway bootstrap
-    sdkwork-github-standalone-gateway/        # Standalone binary
+    sdkwork-api-github-assembly/          # Gateway bootstrap
+    sdkwork-api-github-standalone-gateway/        # Standalone binary
   apps/sdkwork-github-pc/
     packages/
       sdkwork-github-pc-core/                 # Runtime + SDK client
@@ -125,7 +125,7 @@ sdkwork-github/
 
 - Development: `pnpm dev` starts browser dev server with SQLite.
 - Build: `pnpm build` compiles Rust workspace.
-- Standalone gateway: `sdkwork-github-standalone-gateway` binary.
+- Standalone gateway: `sdkwork-api-github-standalone-gateway` binary.
 - Database lifecycle: `pnpm db:*` commands via `sdkwork-database` CLI.
 
 ## 8. Architecture Decision Index

@@ -25,7 +25,7 @@
   ],
   "contracts": {
     "publicExports": [],
-    "runtimeEntrypoints": ["crates/sdkwork-github-standalone-gateway", "apps/sdkwork-github-pc"],
+    "runtimeEntrypoints": ["crates/sdkwork-api-github-standalone-gateway", "apps/sdkwork-github-pc"],
     "routeManifest": "sdks/_route-manifests/app-api/sdkwork-routes-github-app-api.route-manifest.json",
     "backendRouteManifest": "sdks/_route-manifests/backend-api/sdkwork-routes-github-backend-api.route-manifest.json",
     "sdkClients": ["@sdkwork/github-app-sdk"],

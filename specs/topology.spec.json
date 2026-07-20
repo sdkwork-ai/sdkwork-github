@@ -61,8 +61,8 @@
   },
   "components": {
     "applicationServer": {
-      "crate": "sdkwork-github-standalone-gateway",
-      "binary": "sdkwork-github-standalone-gateway"
+      "crate": "sdkwork-api-github-standalone-gateway",
+      "binary": "sdkwork-api-github-standalone-gateway"
     }
   },
   "retired": {
@@ -87,8 +87,8 @@
         "processes": [
           {
             "id": "application.public-ingress",
-            "crate": "sdkwork-github-standalone-gateway",
-            "binary": "sdkwork-github-standalone-gateway",
+            "crate": "sdkwork-api-github-standalone-gateway",
+            "binary": "sdkwork-api-github-standalone-gateway",
             "required": true,
             "role": "api-standalone-gateway"
           }
@@ -108,8 +108,8 @@
         "processes": [
           {
             "id": "application.public-ingress",
-            "crate": "sdkwork-github-standalone-gateway",
-            "binary": "sdkwork-github-standalone-gateway",
+            "crate": "sdkwork-api-github-standalone-gateway",
+            "binary": "sdkwork-api-github-standalone-gateway",
             "required": true,
             "role": "api-standalone-gateway"
           }
@@ -123,8 +123,8 @@
         "processes": [
           {
             "id": "application.public-ingress",
-            "crate": "sdkwork-github-standalone-gateway",
-            "binary": "sdkwork-github-standalone-gateway",
+            "crate": "sdkwork-api-github-standalone-gateway",
+            "binary": "sdkwork-api-github-standalone-gateway",
             "required": true,
             "role": "api-standalone-gateway"
           }
