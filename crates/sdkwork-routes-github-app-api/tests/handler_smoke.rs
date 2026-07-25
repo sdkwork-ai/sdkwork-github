@@ -65,6 +65,7 @@ fn test_context(tenant_id: &str, organization_id: &str) -> WebRequestContext {
             auth_token_present: true,
             access_token_present: true,
             api_key_present: false,
+            ingress_token_present: false,
             oauth_bearer_present: false,
             agent_token_present: false,
         },
