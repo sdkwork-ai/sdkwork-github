@@ -1,6 +1,11 @@
+contract_version: 1.0.0
 schemaVersion: 1
 kind: sdkwork.database.contract
+database_role: authoritative-server
 moduleId: github
+engines:
+  - postgres
+table_prefix: github_
 tables:
   - name: github_repository
     columns:

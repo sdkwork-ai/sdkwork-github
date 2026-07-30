@@ -1,23 +1,30 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "kind": "sdkwork.database.module",
   "moduleId": "github",
   "serviceCode": "GITHUB",
   "displayName": "GitHub Integration Database",
   "owner": "github-platform",
-  "engines": ["sqlite", "postgres"],
-  "defaultEngine": "sqlite",
+  "engines": [
+    "postgres"
+  ],
+  "defaultEngine": "postgres",
   "tablePrefix": "github_",
   "contractVersion": "1.0.0",
   "baselineStrategy": "baseline-plus-migrations",
   "modules": [],
   "lifecycle": {
-    "autoMigrate": true,
+    "autoMigrate": false,
     "seedOnBoot": false,
     "defaultSeedLocale": "zh-CN",
     "defaultSeedProfile": "standard",
-    "supportedSeedLocales": ["zh-CN", "en-US"],
-    "activeSeedLocales": ["zh-CN"],
+    "supportedSeedLocales": [
+      "zh-CN",
+      "en-US"
+    ],
+    "activeSeedLocales": [
+      "zh-CN"
+    ],
     "driftCheckIntervalSec": 60
   },
   "paths": {
@@ -29,5 +36,6 @@
   "spi": {
     "provider": "default",
     "hooks": []
-  }
+  },
+  "databaseRole": "authoritative-server"
 }

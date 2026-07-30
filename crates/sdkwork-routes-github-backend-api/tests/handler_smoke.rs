@@ -32,7 +32,7 @@ async fn migrated_store() -> SqlGitHubStore {
 
 async fn install_schema(pool: DatabasePool) {
     let sqlite = pool.as_sqlite().expect("sqlite pool");
-    let baseline = include_str!("../../../database/ddl/baseline/sqlite/0001_github_baseline.sql");
+    let baseline = include_str!("../../../tests/fixtures/database/sqlite/ddl/baseline/0001_github_baseline.sql");
     // Strip single-line SQL comments before splitting on semicolons to avoid
     // breaking on semicolons that appear inside `-- ...` comment text.
     let stripped: String = baseline

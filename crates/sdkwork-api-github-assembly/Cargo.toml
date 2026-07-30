@@ -11,6 +11,7 @@ path = "src/lib.rs"
 [dependencies]
 axum.workspace = true
 tokio.workspace = true
+sdkwork-web-bootstrap.workspace = true
 sdkwork-github-integration-service.workspace = true
 sdkwork-routes-github-app-api.workspace = true
 sdkwork-routes-github-backend-api.workspace = true

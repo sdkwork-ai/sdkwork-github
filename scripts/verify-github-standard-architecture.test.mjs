@@ -98,14 +98,14 @@ test('integrates sdkwork-database lifecycle host in standalone-gateway bootstrap
 test('integrates GitHub provider adapter for external sync', () => {
   assert.equal(exists('crates/sdkwork-github-integration-provider-github/src/client.rs'), true);
   assert.equal(exists('crates/sdkwork-github-integration-provider-github/src/credential.rs'), true);
-  assert.equal(exists('database/ddl/baseline/sqlite/0001_github_baseline.sql'), true);
+  assert.equal(exists('tests/fixtures/database/sqlite/ddl/baseline/0001_github_baseline.sql'), true);
   assert.match(read('crates/sdkwork-github-integration-service/src/service.rs'), /link_integration/);
   assert.match(read('apis/app-api/github/github-app-api.openapi.json'), /integration\.link/);
 });
 
 test('database host supports seed on boot lifecycle option', () => {
   assert.match(read('crates/sdkwork-github-database-host/src/lib.rs'), /seed_on_boot/);
-  assert.match(read('configs/topology/standalone.unified-process.development.env'), /SDKWORK_GITHUB_DATABASE_SEED_ON_BOOT=true/);
+  assert.match(read('configs/topology/standalone.unified-process.development.env'), /SDKWORK_DATABASE_SEED_ON_BOOT=true/);
 });
 
 test('declares handler integration smoke tests', () => {
@@ -162,7 +162,7 @@ test('declares production readiness and OAuth alignment surfaces', () => {
   assert.match(read('crates/sdkwork-api-github-standalone-gateway/src/health.rs'), /metrics_snapshot/);
   assert.match(read('apis/app-api/github/github-app-api.openapi.json'), /integration\.oauth\.begin/);
   assert.match(read('apis/app-api/github/github-app-api.openapi.json'), /catalog\.bootstrap/);
-  assert.equal(exists('database/ddl/baseline/sqlite/0001_github_baseline.sql'), true);
+  assert.equal(exists('tests/fixtures/database/sqlite/ddl/baseline/0001_github_baseline.sql'), true);
   assert.equal(exists('database/catalog/notable-github-repositories.json'), true);
   assert.equal(exists('database/contract/relations.yaml'), true);
   assert.match(read('apis/backend-api/github/github-backend-api.openapi.json'), /integrations\.list/);
@@ -188,7 +188,7 @@ test('declares database framework L2 assets and scripts', () => {
   for (const relativePath of [
     'database/contract/prefix-registry.json',
     'database/seeds/seed.manifest.json',
-    'database/ddl/baseline/sqlite/0001_github_baseline.sql',
+    'tests/fixtures/database/sqlite/ddl/baseline/0001_github_baseline.sql',
     'database/ddl/baseline/postgres/0001_github_baseline.sql',
     'sdks/sdkwork-github-app-sdk/sdk-manifest.json',
     'apps/sdkwork-github-pc/src/bootstrap/createGithubPcRuntime.ts',

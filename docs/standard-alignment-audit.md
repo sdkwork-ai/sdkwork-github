@@ -19,7 +19,7 @@
 - Route manifest 文件名统一为 `sdkwork-routes-github-*.route-manifest.json`
 - 新增 `sdkwork-routes-github-common`，handlers 经 `SdkWorkApiResponse` + `ProblemDetail` 输出
 - `standalone-gateway` 新增 `health.rs`（`ready_check` + `metrics_snapshot`），经 `service_router` 挂载探针
-- 开发拓扑启用 `SDKWORK_GITHUB_DATABASE_SEED_ON_BOOT` 与 `SDKWORK_GITHUB_CATALOG_SYNC_ON_BOOT`；生产拓扑关闭 catalog 启动同步
+- 开发拓扑启用 `SDKWORK_DATABASE_SEED_ON_BOOT` 与 `SDKWORK_GITHUB_CATALOG_SYNC_ON_BOOT`；生产拓扑关闭 catalog 启动同步
 - PC 依赖 workspace 统一在仓库根 `pnpm-workspace.yaml`（禁止 app 级嵌套 workspace）；composition 契约指向 `specs/component.spec.json`
 
 ## 验证命令
