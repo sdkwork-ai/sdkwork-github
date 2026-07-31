@@ -2,6 +2,7 @@
   "schemaVersion": 5,
   "kind": "sdkwork.app.topology",
   "appId": "sdkwork-github",
+  "applicationCode": "github",
   "archetype": "application-http-gateway",
   "profileRoot": "configs/topology",
   "profilePattern": "{deploymentProfile}.{environment}.env",
@@ -55,9 +56,6 @@
       "httpUrlEnv": "SDKWORK_GITHUB_PLATFORM_API_GATEWAY_HTTP_URL",
       "clientHttpEnv": "VITE_SDKWORK_GITHUB_PLATFORM_API_GATEWAY_HTTP_URL"
     }
-  },
-  "database": {
-    "appPrefix": "SDKWORK_GITHUB"
   },
   "components": {
     "applicationServer": {
