@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
@@ -9,39 +13,10 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "allowImportingTsExtensions": true,
-    "noEmit": true,
-    "paths": {
-      "@sdkwork/utils": [
-        "../../../sdkwork-utils/packages/sdkwork-utils-typescript/src/index.ts"
-      ],
-      "@sdkwork/iam-app-sdk": [
-        "../../../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/src/index.ts"
-      ],
-      "@sdkwork/iam-backend-sdk": [
-        "../../../sdkwork-iam/sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript/src/index.ts"
-      ],
-      "@sdkwork/auth-pc-react": [
-        "./src/bootstrap/sdkworkAuthPcReactShim.d.ts"
-      ],
-      "@sdkwork/auth-runtime-pc-react": [
-        "./packages/sdkwork-github-pc-core/src/iam/sdkworkAuthRuntimePcReactShim.d.ts"
-      ],
-      "@sdkwork/core-pc-react": [
-        "../../../sdkwork-core/sdkwork-core-pc-react/src/index.ts"
-      ],
-      "@sdkwork/github-app-sdk": [
-        "../../sdks/sdkwork-github-app-sdk/sdkwork-github-app-sdk-typescript/src/index.ts"
-      ],
-      "@sdkwork/iam-contracts": [
-        "../../../sdkwork-iam/apps/sdkwork-iam-common/packages/sdkwork-iam-contracts/src/index.ts"
-      ],
-      "@sdkwork/sdk-common": [
-        "../../../sdkwork-sdk-commons/sdkwork-sdk-common-typescript/src/index.ts"
-      ],
-      "@sdkwork/ui-pc-react": [
-        "../../../sdkwork-ui/sdkwork-ui-pc-react/src/index.ts"
-      ]
-    }
+    "noEmit": true
   },
-  "include": ["src", "packages"]
+  "include": [
+    "src",
+    "packages"
+  ]
 }
