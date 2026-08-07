@@ -16,42 +16,27 @@ use sdkwork_web_core::{
     WebRequestPrincipal, WebTransportFacts,
 };
 
-async fn migrated_store() -> SqlGitHubStore {
-    let config = DatabaseConfig {
-        engine: DatabaseEngine::Sqlite,
-        url: "sqlite::memory:".to_string(),
-        max_connections: 1,
-        ..Default::default()
+async fn migrated_store() -> Option<SqlGitHubStore> {
+    let Some(database_url) = optional_postgres_database_url() else {
+        eprintln!("skipping handler smoke test: set SDKWORK_DATABASE_URL or DATABASE_URL to a postgres URL");
+        return None;
     };
-    let pool = create_pool_from_config(config)
-        .await
-        .expect("create sqlite memory pool");
-    install_schema(pool.clone()).await;
-    SqlGitHubStore::new(pool)
+    let pool = create_pool_from_config(DatabaseConfig {
+        engine: DatabaseEngine::Postgres,
+        url: database_url,
+        ..Default::default()
+    })
+    .await
+    .expect("create postgres pool");
+    Some(SqlGitHubStore::new(pool))
 }
 
-async fn install_schema(pool: DatabasePool) {
-    let sqlite = pool.as_sqlite().expect("sqlite pool");
-    let baseline = include_str!("../../../tests/fixtures/database/sqlite/ddl/baseline/0001_github_baseline.sql");
-    // Strip single-line SQL comments before splitting on semicolons to avoid
-    // breaking on semicolons that appear inside `-- ...` comment text.
-    let stripped: String = baseline
-        .lines()
-        .map(|line| {
-            if let Some(idx) = line.find("--") {
-                &line[..idx]
-            } else {
-                line
-            }
-        })
-        .collect::<Vec<_>>()
-        .join("\n");
-    for statement in stripped.split(';').map(str::trim).filter(|value| !value.is_empty()) {
-        sqlx::query(statement)
-            .execute(sqlite)
-            .await
-            .expect("execute schema statement");
-    }
+
+fn optional_postgres_database_url() -> Option<String> {
+    std::env::var("SDKWORK_DATABASE_URL")
+        .or_else(|_| std::env::var("DATABASE_URL"))
+        .ok()
+        .filter(|url| DatabaseEngine::from_url(url) == Some(DatabaseEngine::Postgres))
 }
 
 fn test_context() -> WebRequestContext {
@@ -84,6 +69,7 @@ fn test_context() -> WebRequestContext {
         client_kind: None,
         operation: None,
         trace_id: Some("trace-test".to_owned()),
+        idempotency_key: None,
     }
 }
 
@@ -96,7 +82,10 @@ async fn response_json(response: Response) -> serde_json::Value {
 
 #[tokio::test]
 async fn list_integrations_returns_linked_accounts() {
-    let store = migrated_store().await;
+    let Some(store) = migrated_store().await else {
+        eprintln!("skipping handler smoke test: set SDKWORK_DATABASE_URL or DATABASE_URL to a postgres URL");
+        return;
+    };
     store
         .link_integration(
             "100001",
@@ -133,7 +122,10 @@ async fn list_integrations_returns_linked_accounts() {
 
 #[tokio::test]
 async fn sync_integration_requires_linked_provider() {
-    let store = migrated_store().await;
+    let Some(store) = migrated_store().await else {
+        eprintln!("skipping handler smoke test: set SDKWORK_DATABASE_URL or DATABASE_URL to a postgres URL");
+        return;
+    };
     let service = GitHubIntegrationService::new(store);
     let state = GitHubBackendState::new(service);
     let response = handlers::sync_integration_repositories(

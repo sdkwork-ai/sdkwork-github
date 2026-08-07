@@ -20,33 +20,9 @@ impl GitHubSyncStore for SqlGitHubStore {
         let is_private = if repository.is_private { 1 } else { 0 };
         match self.pool().engine() {
             DatabaseEngine::Sqlite => {
-                let pool = self.pool().as_sqlite().expect("sqlite pool");
-                sqlx::query(
-                    "INSERT INTO github_repository (id, tenant_id, organization_id, full_name, owner, description, default_branch, html_url, is_private, created_at, updated_at)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                     ON CONFLICT(id) DO UPDATE SET
-                       full_name = excluded.full_name,
-                       owner = excluded.owner,
-                       description = excluded.description,
-                       default_branch = excluded.default_branch,
-                       html_url = excluded.html_url,
-                       is_private = excluded.is_private,
-                       updated_at = excluded.updated_at",
-                )
-                .bind(&repository.id)
-                .bind(&repository.tenant_id)
-                .bind(&repository.organization_id)
-                .bind(&repository.full_name)
-                .bind(&repository.owner)
-                .bind(&repository.description)
-                .bind(&repository.default_branch)
-                .bind(&repository.html_url)
-                .bind(is_private)
-                .bind(created_at)
-                .bind(updated_at)
-                .execute(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
+                return Err(ServiceError::Repository(
+                    "github integration store requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".to_string(),
+                ));
             }
             DatabaseEngine::Postgres => {
                 let pool = self.pool().as_postgres().expect("postgres pool");
@@ -86,29 +62,9 @@ impl GitHubSyncStore for SqlGitHubStore {
         let updated_at = format_timestamp(issue.updated_at);
         match self.pool().engine() {
             DatabaseEngine::Sqlite => {
-                let pool = self.pool().as_sqlite().expect("sqlite pool");
-                sqlx::query(
-                    "INSERT INTO github_issue (id, tenant_id, organization_id, repository_id, number, title, state, html_url, created_at, updated_at)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                     ON CONFLICT(id) DO UPDATE SET
-                       title = excluded.title,
-                       state = excluded.state,
-                       html_url = excluded.html_url,
-                       updated_at = excluded.updated_at",
-                )
-                .bind(&issue.id)
-                .bind(&issue.tenant_id)
-                .bind(&issue.organization_id)
-                .bind(&issue.repository_id)
-                .bind(issue.number)
-                .bind(&issue.title)
-                .bind(&issue.state)
-                .bind(&issue.html_url)
-                .bind(created_at)
-                .bind(updated_at)
-                .execute(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
+                return Err(ServiceError::Repository(
+                    "github integration store requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".to_string(),
+                ));
             }
             DatabaseEngine::Postgres => {
                 let pool = self.pool().as_postgres().expect("postgres pool");
@@ -144,27 +100,9 @@ impl GitHubSyncStore for SqlGitHubStore {
         let updated_at = format_timestamp(plan.updated_at);
         match self.pool().engine() {
             DatabaseEngine::Sqlite => {
-                let pool = self.pool().as_sqlite().expect("sqlite pool");
-                sqlx::query(
-                    "INSERT INTO github_plan (id, tenant_id, organization_id, repository_id, title, status, created_at, updated_at)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                     ON CONFLICT(id) DO UPDATE SET
-                       repository_id = excluded.repository_id,
-                       title = excluded.title,
-                       status = excluded.status,
-                       updated_at = excluded.updated_at",
-                )
-                .bind(&plan.id)
-                .bind(&plan.tenant_id)
-                .bind(&plan.organization_id)
-                .bind(&plan.repository_id)
-                .bind(&plan.title)
-                .bind(&plan.status)
-                .bind(created_at)
-                .bind(updated_at)
-                .execute(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
+                return Err(ServiceError::Repository(
+                    "github integration store requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".to_string(),
+                ));
             }
             DatabaseEngine::Postgres => {
                 let pool = self.pool().as_postgres().expect("postgres pool");
@@ -198,28 +136,9 @@ impl GitHubSyncStore for SqlGitHubStore {
         let updated_at = format_timestamp(item.updated_at);
         match self.pool().engine() {
             DatabaseEngine::Sqlite => {
-                let pool = self.pool().as_sqlite().expect("sqlite pool");
-                sqlx::query(
-                    "INSERT INTO github_plan_item (id, plan_id, title, status, sort_order, issue_id, created_at, updated_at)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                     ON CONFLICT(id) DO UPDATE SET
-                       title = excluded.title,
-                       status = excluded.status,
-                       sort_order = excluded.sort_order,
-                       issue_id = excluded.issue_id,
-                       updated_at = excluded.updated_at",
-                )
-                .bind(&item.id)
-                .bind(&item.plan_id)
-                .bind(&item.title)
-                .bind(&item.status)
-                .bind(item.sort_order)
-                .bind(&item.issue_id)
-                .bind(created_at)
-                .bind(updated_at)
-                .execute(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
+                return Err(ServiceError::Repository(
+                    "github integration store requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".to_string(),
+                ));
             }
             DatabaseEngine::Postgres => {
                 let pool = self.pool().as_postgres().expect("postgres pool");
@@ -257,19 +176,9 @@ impl GitHubSyncStore for SqlGitHubStore {
     ) -> Result<Option<ProviderAccount>, ServiceError> {
         let row = match self.pool().engine() {
             DatabaseEngine::Sqlite => {
-                let pool = self.pool().as_sqlite().expect("sqlite pool");
-                sqlx::query_as::<_, ProviderAccountRow>(
-                    "SELECT id, tenant_id, organization_id, provider, external_account_id, access_token_cipher, scopes, status, last_synced_at, created_at, updated_at
-                     FROM github_provider_account
-                     WHERE tenant_id = ? AND organization_id = ? AND provider = ? AND status = 'active'
-                     LIMIT 1",
-                )
-                .bind(tenant_id)
-                .bind(organization_id)
-                .bind(provider)
-                .fetch_optional(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?
+                return Err(ServiceError::Repository(
+                    "github integration store requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".to_string(),
+                ));
             }
             DatabaseEngine::Postgres => {
                 let pool = self.pool().as_postgres().expect("postgres pool");
@@ -297,32 +206,9 @@ impl GitHubSyncStore for SqlGitHubStore {
         let last_synced_at = account.last_synced_at.map(format_timestamp);
         match self.pool().engine() {
             DatabaseEngine::Sqlite => {
-                let pool = self.pool().as_sqlite().expect("sqlite pool");
-                sqlx::query(
-                    "INSERT INTO github_provider_account (id, tenant_id, organization_id, provider, external_account_id, access_token_cipher, scopes, status, last_synced_at, created_at, updated_at)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                     ON CONFLICT(tenant_id, organization_id, provider) DO UPDATE SET
-                       external_account_id = excluded.external_account_id,
-                       access_token_cipher = excluded.access_token_cipher,
-                       scopes = excluded.scopes,
-                       status = excluded.status,
-                       last_synced_at = excluded.last_synced_at,
-                       updated_at = excluded.updated_at",
-                )
-                .bind(&account.id)
-                .bind(&account.tenant_id)
-                .bind(&account.organization_id)
-                .bind(&account.provider)
-                .bind(&account.external_account_id)
-                .bind(&account.access_token_cipher)
-                .bind(&account.scopes)
-                .bind(&account.status)
-                .bind(last_synced_at)
-                .bind(created_at)
-                .bind(updated_at)
-                .execute(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
+                return Err(ServiceError::Repository(
+                    "github integration store requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".to_string(),
+                ));
             }
             DatabaseEngine::Postgres => {
                 let pool = self.pool().as_postgres().expect("postgres pool");
@@ -365,19 +251,9 @@ impl GitHubSyncStore for SqlGitHubStore {
         let updated_at = format_timestamp(Utc::now());
         match self.pool().engine() {
             DatabaseEngine::Sqlite => {
-                let pool = self.pool().as_sqlite().expect("sqlite pool");
-                sqlx::query(
-                    "UPDATE github_provider_account
-                     SET status = 'revoked', updated_at = ?
-                     WHERE tenant_id = ? AND organization_id = ? AND provider = ?",
-                )
-                .bind(&updated_at)
-                .bind(tenant_id)
-                .bind(organization_id)
-                .bind(provider)
-                .execute(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
+                return Err(ServiceError::Repository(
+                    "github integration store requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".to_string(),
+                ));
             }
             DatabaseEngine::Postgres => {
                 let pool = self.pool().as_postgres().expect("postgres pool");
@@ -464,20 +340,9 @@ impl GitHubSyncStore for SqlGitHubStore {
         let last_synced_at = updated_at.clone();
         match self.pool().engine() {
             DatabaseEngine::Sqlite => {
-                let pool = self.pool().as_sqlite().expect("sqlite pool");
-                sqlx::query(
-                    "UPDATE github_provider_account
-                     SET last_synced_at = ?, updated_at = ?
-                     WHERE tenant_id = ? AND organization_id = ? AND provider = ? AND status = 'active'",
-                )
-                .bind(&last_synced_at)
-                .bind(&updated_at)
-                .bind(tenant_id)
-                .bind(organization_id)
-                .bind(provider)
-                .execute(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
+                return Err(ServiceError::Repository(
+                    "github integration store requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".to_string(),
+                ));
             }
             DatabaseEngine::Postgres => {
                 let pool = self.pool().as_postgres().expect("postgres pool");
@@ -510,19 +375,9 @@ impl GitHubSyncStore for SqlGitHubStore {
         let expires_at = format_timestamp(expires_at);
         match self.pool().engine() {
             DatabaseEngine::Sqlite => {
-                let pool = self.pool().as_sqlite().expect("sqlite pool");
-                sqlx::query(
-                    "INSERT INTO github_oauth_pending (state, tenant_id, organization_id, created_at, expires_at)
-                     VALUES (?, ?, ?, ?, ?)",
-                )
-                .bind(state)
-                .bind(tenant_id)
-                .bind(organization_id)
-                .bind(created_at)
-                .bind(expires_at)
-                .execute(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
+                return Err(ServiceError::Repository(
+                    "github integration store requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".to_string(),
+                ));
             }
             DatabaseEngine::Postgres => {
                 let pool = self.pool().as_postgres().expect("postgres pool");
@@ -550,26 +405,9 @@ impl GitHubSyncStore for SqlGitHubStore {
         let now = format_timestamp(Utc::now());
         let row = match self.pool().engine() {
             DatabaseEngine::Sqlite => {
-                let pool = self.pool().as_sqlite().expect("sqlite pool");
-                let row = sqlx::query_as::<_, OAuthPendingRow>(
-                    "SELECT state, tenant_id, organization_id, created_at, expires_at
-                     FROM github_oauth_pending
-                     WHERE state = ? AND expires_at >= ?
-                     LIMIT 1",
-                )
-                .bind(state)
-                .bind(&now)
-                .fetch_optional(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
-                if row.is_some() {
-                    sqlx::query("DELETE FROM github_oauth_pending WHERE state = ?")
-                        .bind(state)
-                        .execute(pool)
-                        .await
-                        .map_err(|error| ServiceError::Repository(error.to_string()))?;
-                }
-                row
+                return Err(ServiceError::Repository(
+                    "github integration store requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".to_string(),
+                ));
             }
             DatabaseEngine::Postgres => {
                 let pool = self.pool().as_postgres().expect("postgres pool");
@@ -601,12 +439,9 @@ impl GitHubSyncStore for SqlGitHubStore {
         let now = format_timestamp(Utc::now());
         match self.pool().engine() {
             DatabaseEngine::Sqlite => {
-                let pool = self.pool().as_sqlite().expect("sqlite pool");
-                sqlx::query("DELETE FROM github_oauth_pending WHERE expires_at < ?")
-                    .bind(&now)
-                    .execute(pool)
-                    .await
-                    .map_err(|error| ServiceError::Repository(error.to_string()))?;
+                return Err(ServiceError::Repository(
+                    "github integration store requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".to_string(),
+                ));
             }
             DatabaseEngine::Postgres => {
                 let pool = self.pool().as_postgres().expect("postgres pool");
@@ -629,31 +464,9 @@ impl GitHubSyncStore for SqlGitHubStore {
         let limit = page_size as i64;
         match self.pool().engine() {
             DatabaseEngine::Sqlite => {
-                let pool = self.pool().as_sqlite().expect("sqlite pool");
-                let total: (i64,) = sqlx::query_as(
-                    "SELECT COUNT(*) FROM github_provider_account WHERE status = 'active'",
-                )
-                .fetch_one(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
-                let rows = sqlx::query_as::<_, AdminIntegrationRow>(
-                    "SELECT tenant_id, organization_id, provider, external_account_id, scopes, status, last_synced_at
-                     FROM github_provider_account
-                     WHERE status = 'active'
-                     ORDER BY updated_at DESC
-                     LIMIT ? OFFSET ?",
-                )
-                .bind(limit)
-                .bind(offset)
-                .fetch_all(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
-                Ok(Page {
-                    items: rows.into_iter().map(Into::into).collect(),
-                    page,
-                    page_size,
-                    total: total.0 as u64,
-                })
+                return Err(ServiceError::Repository(
+                    "github integration store requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".to_string(),
+                ));
             }
             DatabaseEngine::Postgres => {
                 let pool = self.pool().as_postgres().expect("postgres pool");

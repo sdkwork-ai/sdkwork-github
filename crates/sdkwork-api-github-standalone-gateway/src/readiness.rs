@@ -23,11 +23,6 @@ impl ReadinessCheck for GithubDatabaseReadinessCheck {
 
 async fn ping_database(pool: &DatabasePool) -> Result<(), String> {
     match pool {
-        DatabasePool::Sqlite(sqlite, _) => sqlx::query("SELECT 1")
-            .execute(sqlite)
-            .await
-            .map(|_| ())
-            .map_err(|error| format!("sqlite ping failed: {error}")),
         DatabasePool::Postgres(postgres, _) => sqlx::query("SELECT 1")
             .execute(postgres)
             .await

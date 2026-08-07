@@ -35,35 +35,9 @@ impl GitHubStore for SqlGitHubStore {
         let limit = page_size as i64;
         match self.pool.engine() {
             DatabaseEngine::Sqlite => {
-                let pool = self.pool.as_sqlite().expect("sqlite pool");
-                let total: (i64,) = sqlx::query_as(
-                    "SELECT COUNT(*) FROM github_repository WHERE tenant_id = ? AND organization_id = ?",
-                )
-                .bind(tenant_id)
-                .bind(organization_id)
-                .fetch_one(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
-
-                let rows = sqlx::query_as::<_, RepositoryRow>(
-                    "SELECT id, tenant_id, organization_id, full_name, owner, description, default_branch, html_url, is_private, created_at, updated_at
-                     FROM github_repository WHERE tenant_id = ? AND organization_id = ?
-                     ORDER BY updated_at DESC LIMIT ? OFFSET ?",
-                )
-                .bind(tenant_id)
-                .bind(organization_id)
-                .bind(limit)
-                .bind(offset)
-                .fetch_all(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
-
-                Ok(Page {
-                    items: rows.into_iter().map(Into::into).collect(),
-                    page,
-                    page_size,
-                    total: total.0 as u64,
-                })
+                return Err(ServiceError::Repository(
+                    "github integration store requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".to_string(),
+                ));
             }
             DatabaseEngine::Postgres => {
                 let pool = self.pool.as_postgres().expect("postgres pool");
@@ -110,65 +84,10 @@ impl GitHubStore for SqlGitHubStore {
         let offset = ((page.saturating_sub(1)) * page_size) as i64;
         let limit = page_size as i64;
         match (self.pool.engine(), repository_id) {
-            (DatabaseEngine::Sqlite, Some(repository_id)) => {
-                let pool = self.pool.as_sqlite().expect("sqlite pool");
-                let total: (i64,) = sqlx::query_as(
-                    "SELECT COUNT(*) FROM github_issue WHERE tenant_id = ? AND organization_id = ? AND repository_id = ?",
-                )
-                .bind(tenant_id)
-                .bind(organization_id)
-                .bind(repository_id)
-                .fetch_one(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
-                let rows = sqlx::query_as::<_, IssueRow>(
-                    "SELECT id, tenant_id, organization_id, repository_id, number, title, state, html_url, created_at, updated_at
-                     FROM github_issue WHERE tenant_id = ? AND organization_id = ? AND repository_id = ?
-                     ORDER BY number DESC LIMIT ? OFFSET ?",
-                )
-                .bind(tenant_id)
-                .bind(organization_id)
-                .bind(repository_id)
-                .bind(limit)
-                .bind(offset)
-                .fetch_all(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
-                Ok(Page {
-                    items: rows.into_iter().map(Into::into).collect(),
-                    page,
-                    page_size,
-                    total: total.0 as u64,
-                })
-            }
-            (DatabaseEngine::Sqlite, None) => {
-                let pool = self.pool.as_sqlite().expect("sqlite pool");
-                let total: (i64,) = sqlx::query_as(
-                    "SELECT COUNT(*) FROM github_issue WHERE tenant_id = ? AND organization_id = ?",
-                )
-                .bind(tenant_id)
-                .bind(organization_id)
-                .fetch_one(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
-                let rows = sqlx::query_as::<_, IssueRow>(
-                    "SELECT id, tenant_id, organization_id, repository_id, number, title, state, html_url, created_at, updated_at
-                     FROM github_issue WHERE tenant_id = ? AND organization_id = ?
-                     ORDER BY updated_at DESC LIMIT ? OFFSET ?",
-                )
-                .bind(tenant_id)
-                .bind(organization_id)
-                .bind(limit)
-                .bind(offset)
-                .fetch_all(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
-                Ok(Page {
-                    items: rows.into_iter().map(Into::into).collect(),
-                    page,
-                    page_size,
-                    total: total.0 as u64,
-                })
+            (DatabaseEngine::Sqlite, _) => {
+                return Err(ServiceError::Repository(
+                    "github integration store requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".to_string(),
+                ));
             }
             (DatabaseEngine::Postgres, Some(repository_id)) => {
                 let pool = self.pool.as_postgres().expect("postgres pool");
@@ -244,35 +163,9 @@ impl GitHubStore for SqlGitHubStore {
         let limit = page_size as i64;
         match self.pool.engine() {
             DatabaseEngine::Sqlite => {
-                let pool = self.pool.as_sqlite().expect("sqlite pool");
-                let total: (i64,) = sqlx::query_as(
-                    "SELECT COUNT(*) FROM github_plan WHERE tenant_id = ? AND organization_id = ?",
-                )
-                .bind(tenant_id)
-                .bind(organization_id)
-                .fetch_one(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
-
-                let rows = sqlx::query_as::<_, PlanRow>(
-                    "SELECT id, tenant_id, organization_id, repository_id, title, status, created_at, updated_at
-                     FROM github_plan WHERE tenant_id = ? AND organization_id = ?
-                     ORDER BY updated_at DESC LIMIT ? OFFSET ?",
-                )
-                .bind(tenant_id)
-                .bind(organization_id)
-                .bind(limit)
-                .bind(offset)
-                .fetch_all(pool)
-                .await
-                .map_err(|error| ServiceError::Repository(error.to_string()))?;
-
-                Ok(Page {
-                    items: rows.into_iter().map(Into::into).collect(),
-                    page,
-                    page_size,
-                    total: total.0 as u64,
-                })
+                return Err(ServiceError::Repository(
+                    "github integration store requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".to_string(),
+                ));
             }
             DatabaseEngine::Postgres => {
                 let pool = self.pool.as_postgres().expect("postgres pool");
@@ -317,24 +210,9 @@ impl GitHubStore for SqlGitHubStore {
         }
         match self.pool.engine() {
             DatabaseEngine::Sqlite => {
-                let pool = self.pool.as_sqlite().expect("sqlite pool");
-                let mut query = String::from(
-                    "SELECT id, plan_id, title, status, sort_order, issue_id, created_at, updated_at
-                     FROM github_plan_item WHERE plan_id IN (",
-                );
-                query.push_str(&std::iter::repeat("?")
-                    .take(plan_ids.len())
-                    .collect::<Vec<_>>()
-                    .join(", "));
-                query.push_str(") ORDER BY plan_id ASC, sort_order ASC");
-                let mut sql = sqlx::query_as::<_, PlanItemRow>(&query);
-                for plan_id in plan_ids {
-                    sql = sql.bind(plan_id);
-                }
-                sql.fetch_all(pool)
-                    .await
-                    .map_err(|error| ServiceError::Repository(error.to_string()))
-                    .map(|rows| rows.into_iter().map(Into::into).collect())
+                return Err(ServiceError::Repository(
+                    "github integration store requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".to_string(),
+                ));
             }
             DatabaseEngine::Postgres => {
                 let pool = self.pool.as_postgres().expect("postgres pool");
@@ -343,7 +221,7 @@ impl GitHubStore for SqlGitHubStore {
                      FROM github_plan_item WHERE plan_id = ANY(",
                 );
                 query.push_str("$1) ORDER BY plan_id ASC, sort_order ASC");
-                sqlx::query_as::<_, PlanItemRow>(&query)
+                sqlx::query_as::<_, PlanItemRow>(sqlx::AssertSqlSafe(query))
                     .bind(plan_ids)
                     .fetch_all(pool)
                     .await
