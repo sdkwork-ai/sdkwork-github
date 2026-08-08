@@ -98,8 +98,19 @@ function isGithubAuthRoute(pathname: string): boolean {
 }
 
 function sanitizeRedirect(value: string | null | undefined): string {
-  if (!value || !value.startsWith('/') || value.startsWith('//')) return '/';
-  return value;
+  if (!value) return '/';
+  let decoded = value;
+  try {
+    decoded = decodeURIComponent(value);
+  } catch {
+    return '/';
+  }
+  if (!decoded.startsWith('/') || decoded.startsWith('//')) return '/';
+  const target = new URL(decoded, 'http://sdkwork-github.local');
+  // A redirect back into the auth surface (possibly nested/encoded) must be
+  // rejected so the login page does not bounce through itself.
+  if (isGithubAuthRoute(target.pathname)) return '/';
+  return `${target.pathname}${target.search}${target.hash}`;
 }
 
 function normalizePathname(pathname: string): string {

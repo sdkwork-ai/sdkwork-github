@@ -34,10 +34,7 @@ pub async fn build_router() -> Result<Router, Box<dyn std::error::Error + Send +
         .merge(build_protected_router(protected).await)
         .layer(sdkwork_web_bootstrap::application_cors_layer_from_env(
             &["SDKWORK_GITHUB_ENVIRONMENT", "GITHUB_ENVIRONMENT"],
-            &[
-                "SDKWORK_GITHUB_CORS_ALLOWED_ORIGINS",
-                "SDKWORK_CORS_ALLOWED_ORIGINS",
-            ],
+            &["SDKWORK_CORS_ALLOWED_ORIGINS"],
         ));
 
     Ok(service_router(
