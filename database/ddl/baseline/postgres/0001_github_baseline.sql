@@ -13,7 +13,7 @@
 CREATE TABLE IF NOT EXISTS github_repository (
     id TEXT PRIMARY KEY NOT NULL,
     tenant_id TEXT NOT NULL,
-    organization_id TEXT NOT NULL,
+    organization_id TEXT NOT NULL DEFAULT '0',
     full_name TEXT NOT NULL,
     owner TEXT NOT NULL,
     description TEXT,
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS github_repository (
 CREATE TABLE IF NOT EXISTS github_issue (
     id TEXT PRIMARY KEY NOT NULL,
     tenant_id TEXT NOT NULL,
-    organization_id TEXT NOT NULL,
+    organization_id TEXT NOT NULL DEFAULT '0',
     repository_id TEXT NOT NULL,
     number INTEGER NOT NULL,
     title TEXT NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS github_issue (
 CREATE TABLE IF NOT EXISTS github_plan (
     id TEXT PRIMARY KEY NOT NULL,
     tenant_id TEXT NOT NULL,
-    organization_id TEXT NOT NULL,
+    organization_id TEXT NOT NULL DEFAULT '0',
     repository_id TEXT,
     title TEXT NOT NULL,
     status TEXT NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS github_plan_item (
 CREATE TABLE IF NOT EXISTS github_provider_account (
     id TEXT PRIMARY KEY NOT NULL,
     tenant_id TEXT NOT NULL,
-    organization_id TEXT NOT NULL,
+    organization_id TEXT NOT NULL DEFAULT '0',
     provider TEXT NOT NULL DEFAULT 'github',
     external_account_id TEXT,
     access_token_cipher TEXT NOT NULL,
@@ -86,7 +86,7 @@ CREATE INDEX IF NOT EXISTS idx_github_provider_account_scope
 CREATE TABLE IF NOT EXISTS github_oauth_pending (
     state TEXT PRIMARY KEY NOT NULL,
     tenant_id TEXT NOT NULL,
-    organization_id TEXT NOT NULL,
+    organization_id TEXT NOT NULL DEFAULT '0',
     created_at TIMESTAMPTZ NOT NULL,
     expires_at TIMESTAMPTZ NOT NULL
 );
@@ -150,7 +150,7 @@ ALTER TABLE github_plan_item
 CREATE TABLE IF NOT EXISTS github_tracker_label (
     id              TEXT PRIMARY KEY NOT NULL,
     tenant_id       TEXT NOT NULL,
-    organization_id TEXT NOT NULL,
+    organization_id TEXT NOT NULL DEFAULT '0',
     name            TEXT NOT NULL,
     color           TEXT NOT NULL DEFAULT '6e7681',
     description     TEXT,
@@ -162,7 +162,7 @@ CREATE TABLE IF NOT EXISTS github_tracker_label (
 CREATE TABLE IF NOT EXISTS github_tracker_milestone (
     id              TEXT PRIMARY KEY NOT NULL,
     tenant_id       TEXT NOT NULL,
-    organization_id TEXT NOT NULL,
+    organization_id TEXT NOT NULL DEFAULT '0',
     title           TEXT NOT NULL,
     description     TEXT,
     status          TEXT NOT NULL DEFAULT 'open',
@@ -174,7 +174,7 @@ CREATE TABLE IF NOT EXISTS github_tracker_milestone (
 CREATE TABLE IF NOT EXISTS github_tracker_issue (
     id              TEXT PRIMARY KEY NOT NULL,
     tenant_id       TEXT NOT NULL,
-    organization_id TEXT NOT NULL,
+    organization_id TEXT NOT NULL DEFAULT '0',
     title           TEXT NOT NULL,
     description     TEXT NOT NULL,
     type            TEXT NOT NULL DEFAULT 'bug',
@@ -216,7 +216,7 @@ CREATE TABLE IF NOT EXISTS github_tracker_vote (
 CREATE TABLE IF NOT EXISTS github_tracker_roadmap (
     id              TEXT PRIMARY KEY NOT NULL,
     tenant_id       TEXT NOT NULL,
-    organization_id TEXT NOT NULL,
+    organization_id TEXT NOT NULL DEFAULT '0',
     title           TEXT NOT NULL,
     description     TEXT,
     status          TEXT NOT NULL DEFAULT 'active',
