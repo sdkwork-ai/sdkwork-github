@@ -4,7 +4,7 @@
   "app": {
     "id": "sdkwork-github",
     "name": "SDKWork GitHub",
-    "repository": "Sdkwork-Cloud/sdkwork-github",
+    "repository": "sdkwork-ai/sdkwork-github",
     "sourcePath": "apps/sdkwork-github-pc",
     "configPath": "apps/sdkwork-github-pc/sdkwork.app.config.json"
   },
