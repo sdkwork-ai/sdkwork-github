@@ -1,10 +1,15 @@
 //! API assembly for sdkwork-github.
 //! Application bootstrap lives in `bootstrap.rs`; route inventory is in `assembly-manifest.json`.
+// SDKWORK-ASSEMBLY-LIB-CUSTOM: exports beyond the canonical materializer template.
 
 mod bootstrap;
+mod catalog;
 mod generated;
+mod readiness;
 
-pub use bootstrap::{assemble_api_router, ApiAssembly};
+pub use bootstrap::{
+    assemble_api_router, assemble_api_router_from_env, ApiAssembly, ApiAssemblyContribution,
+};
 pub use sdkwork_routes_github_app_api::APP_HTTP_ROUTES;
 pub use sdkwork_routes_github_backend_api::BACKEND_HTTP_ROUTES;
 

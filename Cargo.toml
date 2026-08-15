@@ -18,6 +18,8 @@ edition = "2021"
 version = "0.1.0"
 
 [workspace.dependencies]
+sdkwork_api_github_assembly = { path = "crates/sdkwork-api-github-assembly", package = "sdkwork-api-github-assembly" }
+
 async-trait = "0.1"
 axum = "0.8"
 dotenvy = "0.15"
@@ -45,6 +47,7 @@ sdkwork-web-core = { path = "../sdkwork-web-framework/crates/sdkwork-web-core" }
 sdkwork-web-axum = { path = "../sdkwork-web-framework/crates/sdkwork-web-axum" }
 sdkwork-web-bootstrap = { path = "../sdkwork-web-framework/crates/sdkwork-web-bootstrap" }
 sdkwork_iam_web_adapter = { package = "sdkwork-iam-web-adapter", path = "../sdkwork-iam/crates/sdkwork-iam-web-adapter" }
+sdkwork-api-iam-assembly = { path = "../sdkwork-iam/crates/sdkwork-api-iam-assembly" }
 sdkwork_iam_embedded_application_bootstrap = { package = "sdkwork-iam-embedded-application-bootstrap", path = "../sdkwork-iam/crates/sdkwork-iam-embedded-application-bootstrap" }
 sdkwork_iam_database_host = { package = "sdkwork-iam-database-host", path = "../sdkwork-iam/crates/sdkwork-iam-database-host" }
 sdkwork_routes_iam_app_api = { package = "sdkwork-routes-iam-app-api", path = "../sdkwork-iam/crates/sdkwork-routes-iam-app-api" }
