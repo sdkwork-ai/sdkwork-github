@@ -10,7 +10,7 @@ SDKWork GitHub uses the standard project-root dictionary.
 | `database/` | `sdkwork-database` lifecycle assets |
 | `sdks/` | Route manifests and SDK families |
 | `specs/` | Component and topology contracts |
-| `configs/topology/` | Runtime topology profiles |
+| `etc/topology/` | Runtime topology profiles |
 
 Framework integration:
 

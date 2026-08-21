@@ -4,12 +4,14 @@
   "appId": "sdkwork-github",
   "applicationCode": "github",
   "archetype": "application-http-gateway",
-  "profileRoot": "configs/topology",
+  "profileRoot": "etc/topology",
   "profilePattern": "{deploymentProfile}.{environment}.env",
   "vocabulary": {
     "environment": {
       "allowed": [
         "development",
+        "test",
+        "staging",
         "production"
       ]
     },
@@ -27,10 +29,14 @@
     "desktopBuildProfileId": "standalone.production"
   },
   "profileFiles": {
-    "standalone.development": "configs/topology/standalone.development.env",
-    "cloud.production": "configs/topology/cloud.production.env",
-    "standalone.production": "configs/topology/standalone.production.env",
-    "cloud.development": "configs/topology/cloud.development.env"
+    "standalone.development": "etc/topology/standalone.development.env",
+    "cloud.production": "etc/topology/cloud.production.env",
+    "standalone.production": "etc/topology/standalone.production.env",
+    "cloud.development": "etc/topology/cloud.development.env",
+    "standalone.test": "etc/topology/standalone.test.env",
+    "standalone.staging": "etc/topology/standalone.staging.env",
+    "cloud.test": "etc/topology/cloud.test.env",
+    "cloud.staging": "etc/topology/cloud.staging.env"
   },
   "envKeys": {
     "environment": "SDKWORK_GITHUB_ENVIRONMENT",
@@ -129,6 +135,56 @@
         ],
         "healthSurfaces": [
           "application.public-ingress"
+        ]
+      },
+      "standalone.test": {
+        "processes": [
+          {
+            "id": "application.public-ingress",
+            "crate": "sdkwork-api-github-standalone-gateway",
+            "binary": "sdkwork-api-github-standalone-gateway",
+            "required": true,
+            "role": "api-standalone-gateway"
+          }
+        ],
+        "healthSurfaces": [
+          "application.public-ingress"
+        ]
+      },
+      "standalone.staging": {
+        "processes": [
+          {
+            "id": "application.public-ingress",
+            "crate": "sdkwork-api-github-standalone-gateway",
+            "binary": "sdkwork-api-github-standalone-gateway",
+            "required": true,
+            "role": "api-standalone-gateway"
+          }
+        ],
+        "healthSurfaces": [
+          "application.public-ingress"
+        ]
+      },
+      "cloud.test": {
+        "processes": [],
+        "healthSurfaces": [
+          "application.public-ingress",
+          "platform.api-gateway"
+        ]
+      },
+      "cloud.staging": {
+        "processes": [
+          {
+            "id": "application.public-ingress",
+            "crate": "sdkwork-api-github-standalone-gateway",
+            "binary": "sdkwork-api-github-standalone-gateway",
+            "required": true,
+            "role": "api-standalone-gateway"
+          }
+        ],
+        "healthSurfaces": [
+          "application.public-ingress",
+          "platform.api-gateway"
         ]
       }
     }

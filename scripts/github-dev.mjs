@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { mergeRepoDevBootstrapAccessTokenEnv } from '../../sdkwork-iam/scripts/dev/create-dev-bootstrap-access-token-env.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const profile = resolve(root, 'configs/topology/standalone.unified-process.development.env');
+const profile = resolve(root, 'etc/topology/standalone.development.env');
 const profileEnv = Object.fromEntries(
   readFileSync(profile, 'utf8')
     .split(/\r?\n/u)

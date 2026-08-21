@@ -105,7 +105,7 @@ test('integrates GitHub provider adapter for external sync', () => {
 
 test('database host supports seed on boot lifecycle option', () => {
   assert.match(read('crates/sdkwork-github-database-host/src/lib.rs'), /seed_on_boot/);
-  assert.match(read('configs/topology/standalone.unified-process.development.env'), /SDKWORK_DATABASE_SEED_ON_BOOT=true/);
+  assert.match(read('etc/topology/standalone.development.env'), /SDKWORK_DATABASE_SEED_ON_BOOT=true/);
 });
 
 test('declares handler integration smoke tests', () => {
@@ -171,13 +171,13 @@ test('declares production readiness and OAuth alignment surfaces', () => {
     exists('sdks/_route-manifests/backend-api/sdkwork-routes-github-backend-api.route-manifest.json'),
     true,
   );
-  assert.equal(exists('configs/topology/cloud.split-services.production.env'), true);
+  assert.equal(exists('etc/topology/cloud.production.env'), true);
   assert.match(read('crates/sdkwork-api-github-standalone-gateway/src/http_route_manifest.rs'), /APP_HTTP_ROUTES/);
   assert.match(read('crates/sdkwork-github-integration-provider-github/src/client.rs'), /fetch_current_user/);
   assert.match(read('crates/sdkwork-github-integration-provider-github/src/public_api.rs'), /GitHubPublicApiClient/);
   assert.match(read('crates/sdkwork-github-integration-service/src/service.rs'), /bootstrap_notable_catalog/);
-  assert.match(read('configs/topology/standalone.unified-process.development.env'), /SDKWORK_GITHUB_CATALOG_SYNC_ON_BOOT=true/);
-  assert.match(read('configs/topology/cloud.split-services.production.env'), /SDKWORK_GITHUB_CATALOG_SYNC_ON_BOOT=false/);
+  assert.match(read('etc/topology/standalone.development.env'), /SDKWORK_GITHUB_CATALOG_SYNC_ON_BOOT=true/);
+  assert.match(read('etc/topology/cloud.production.env'), /SDKWORK_GITHUB_CATALOG_SYNC_ON_BOOT=false/);
 });
 
 test('declares database framework L2 assets and scripts', () => {
