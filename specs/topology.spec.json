@@ -82,7 +82,90 @@
   },
   "cloudPublicHosts": {
     "platform.api-gateway": {
-      "httpHost": "api.sdkwork.com"
+      "httpHost": "api.sdkwork.com",
+      "environments": {
+        "development": {
+          "httpHosts": [
+            "api-dev.sdkwork.com",
+            "api-dev.birdcoder.com",
+            "api-dev.dtupay.com",
+            "api-dev.sdkwork.cn",
+            "api-dev.birdcoder.cn",
+            "api-dev.dtupay.cn"
+          ]
+        },
+        "test": {
+          "httpHosts": [
+            "api-test.sdkwork.com",
+            "api-test.birdcoder.com",
+            "api-test.dtupay.com",
+            "api-test.sdkwork.cn",
+            "api-test.birdcoder.cn",
+            "api-test.dtupay.cn"
+          ]
+        },
+        "staging": {
+          "httpHosts": [
+            "api-staging.sdkwork.com",
+            "api-staging.birdcoder.com",
+            "api-staging.dtupay.com",
+            "api-staging.sdkwork.cn",
+            "api-staging.birdcoder.cn",
+            "api-staging.dtupay.cn"
+          ]
+        }
+      },
+      "httpHosts": [
+        "api.sdkwork.com",
+        "api.birdcoder.com",
+        "api.dtupay.com",
+        "api.sdkwork.cn",
+        "api.birdcoder.cn",
+        "api.dtupay.cn"
+      ]
+    },
+    "application.public-ingress": {
+      "httpHost": "github.sdkwork.com",
+      "environments": {
+        "development": {
+          "httpHosts": [
+            "github-dev.sdkwork.com",
+            "github-dev.birdcoder.com",
+            "github-dev.dtupay.com",
+            "github-dev.sdkwork.cn",
+            "github-dev.birdcoder.cn",
+            "github-dev.dtupay.cn"
+          ]
+        },
+        "test": {
+          "httpHosts": [
+            "github-test.sdkwork.com",
+            "github-test.birdcoder.com",
+            "github-test.dtupay.com",
+            "github-test.sdkwork.cn",
+            "github-test.birdcoder.cn",
+            "github-test.dtupay.cn"
+          ]
+        },
+        "staging": {
+          "httpHosts": [
+            "github-staging.sdkwork.com",
+            "github-staging.birdcoder.com",
+            "github-staging.dtupay.com",
+            "github-staging.sdkwork.cn",
+            "github-staging.birdcoder.cn",
+            "github-staging.dtupay.cn"
+          ]
+        }
+      },
+      "httpHosts": [
+        "github.sdkwork.com",
+        "github.birdcoder.com",
+        "github.dtupay.com",
+        "github.sdkwork.cn",
+        "github.birdcoder.cn",
+        "github.dtupay.cn"
+      ]
     }
   },
   "orchestration": {

@@ -1,6 +1,5 @@
 version: 2
 defaultProfile: cloud.production
-
 profiles:
   cloud.development:
     deployment:
@@ -16,14 +15,37 @@ profiles:
       availabilityMode: high-availability
     install:
       layout: binary-package
-    expose: []
+    expose:
+      - tls: sdkwork.com
+        mode: web
+        web: adaptive
+        domain: github-dev.sdkwork.com
+      - tls: birdcoder.com
+        mode: web
+        web: adaptive
+        domain: github-dev.birdcoder.com
+      - tls: dtupay.com
+        mode: web
+        web: adaptive
+        domain: github-dev.dtupay.com
+      - tls: sdkwork.cn
+        mode: web
+        web: adaptive
+        domain: github-dev.sdkwork.cn
+      - tls: birdcoder.cn
+        mode: web
+        web: adaptive
+        domain: github-dev.birdcoder.cn
+      - tls: dtupay.cn
+        mode: web
+        web: adaptive
+        domain: github-dev.dtupay.cn
     packages: []
     overrides:
       topology:
         spec: specs/topology.spec.json
         profile: cloud.development
         env: etc/topology/cloud.development.env
-
   cloud.production:
     deployment:
       deploymentProfile: cloud
@@ -38,14 +60,37 @@ profiles:
       availabilityMode: high-availability
     install:
       layout: binary-package
-    expose: []
+    expose:
+      - tls: sdkwork.com
+        mode: web
+        web: adaptive
+        domain: github.sdkwork.com
+      - tls: birdcoder.com
+        mode: web
+        web: adaptive
+        domain: github.birdcoder.com
+      - tls: dtupay.com
+        mode: web
+        web: adaptive
+        domain: github.dtupay.com
+      - tls: sdkwork.cn
+        mode: web
+        web: adaptive
+        domain: github.sdkwork.cn
+      - tls: birdcoder.cn
+        mode: web
+        web: adaptive
+        domain: github.birdcoder.cn
+      - tls: dtupay.cn
+        mode: web
+        web: adaptive
+        domain: github.dtupay.cn
     packages: []
     overrides:
       topology:
         spec: specs/topology.spec.json
         profile: cloud.production
         env: etc/topology/cloud.production.env
-
   standalone.development:
     deployment:
       deploymentProfile: standalone
@@ -60,14 +105,37 @@ profiles:
       availabilityMode: single-instance
     install:
       layout: binary-package
-    expose: []
+    expose:
+      - tls: sdkwork.com
+        mode: web
+        web: adaptive
+        domain: github-dev.sdkwork.com
+      - tls: birdcoder.com
+        mode: web
+        web: adaptive
+        domain: github-dev.birdcoder.com
+      - tls: dtupay.com
+        mode: web
+        web: adaptive
+        domain: github-dev.dtupay.com
+      - tls: sdkwork.cn
+        mode: web
+        web: adaptive
+        domain: github-dev.sdkwork.cn
+      - tls: birdcoder.cn
+        mode: web
+        web: adaptive
+        domain: github-dev.birdcoder.cn
+      - tls: dtupay.cn
+        mode: web
+        web: adaptive
+        domain: github-dev.dtupay.cn
     packages: []
     overrides:
       topology:
         spec: specs/topology.spec.json
         profile: standalone.development
         env: etc/topology/standalone.development.env
-
   standalone.production:
     deployment:
       deploymentProfile: standalone
@@ -82,7 +150,31 @@ profiles:
       availabilityMode: single-instance
     install:
       layout: binary-package
-    expose: []
+    expose:
+      - tls: sdkwork.com
+        mode: web
+        web: adaptive
+        domain: github.sdkwork.com
+      - tls: birdcoder.com
+        mode: web
+        web: adaptive
+        domain: github.birdcoder.com
+      - tls: dtupay.com
+        mode: web
+        web: adaptive
+        domain: github.dtupay.com
+      - tls: sdkwork.cn
+        mode: web
+        web: adaptive
+        domain: github.sdkwork.cn
+      - tls: birdcoder.cn
+        mode: web
+        web: adaptive
+        domain: github.birdcoder.cn
+      - tls: dtupay.cn
+        mode: web
+        web: adaptive
+        domain: github.dtupay.cn
     packages: []
     overrides:
       topology:
