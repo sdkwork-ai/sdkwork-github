@@ -40,6 +40,38 @@ profiles:
         mode: web
         web: adaptive
         domain: github-dev.dtupay.cn
+      - tls: skubc.com
+        mode: web
+        web: adaptive
+        domain: github-dev.skubc.com
+      - tls: skubc.cn
+        mode: web
+        web: adaptive
+        domain: github-dev.skubc.cn
+      - tls: zowalk.com
+        mode: web
+        web: adaptive
+        domain: github-dev.zowalk.com
+      - tls: zowalk.cn
+        mode: web
+        web: adaptive
+        domain: github-dev.zowalk.cn
+      - tls: offer86.com
+        mode: web
+        web: adaptive
+        domain: github-dev.offer86.com
+      - tls: offer86.cn
+        mode: web
+        web: adaptive
+        domain: github-dev.offer86.cn
+      - tls: 86offer.com
+        mode: web
+        web: adaptive
+        domain: github-dev.86offer.com
+      - tls: 86offer.cn
+        mode: web
+        web: adaptive
+        domain: github-dev.86offer.cn
     packages: []
     overrides:
       topology:
@@ -85,6 +117,38 @@ profiles:
         mode: web
         web: adaptive
         domain: github.dtupay.cn
+      - tls: skubc.com
+        mode: web
+        web: adaptive
+        domain: github.skubc.com
+      - tls: skubc.cn
+        mode: web
+        web: adaptive
+        domain: github.skubc.cn
+      - tls: zowalk.com
+        mode: web
+        web: adaptive
+        domain: github.zowalk.com
+      - tls: zowalk.cn
+        mode: web
+        web: adaptive
+        domain: github.zowalk.cn
+      - tls: offer86.com
+        mode: web
+        web: adaptive
+        domain: github.offer86.com
+      - tls: offer86.cn
+        mode: web
+        web: adaptive
+        domain: github.offer86.cn
+      - tls: 86offer.com
+        mode: web
+        web: adaptive
+        domain: github.86offer.com
+      - tls: 86offer.cn
+        mode: web
+        web: adaptive
+        domain: github.86offer.cn
     packages: []
     overrides:
       topology:
@@ -130,6 +194,38 @@ profiles:
         mode: web
         web: adaptive
         domain: github-dev.dtupay.cn
+      - tls: skubc.com
+        mode: web
+        web: adaptive
+        domain: github-dev.skubc.com
+      - tls: skubc.cn
+        mode: web
+        web: adaptive
+        domain: github-dev.skubc.cn
+      - tls: zowalk.com
+        mode: web
+        web: adaptive
+        domain: github-dev.zowalk.com
+      - tls: zowalk.cn
+        mode: web
+        web: adaptive
+        domain: github-dev.zowalk.cn
+      - tls: offer86.com
+        mode: web
+        web: adaptive
+        domain: github-dev.offer86.com
+      - tls: offer86.cn
+        mode: web
+        web: adaptive
+        domain: github-dev.offer86.cn
+      - tls: 86offer.com
+        mode: web
+        web: adaptive
+        domain: github-dev.86offer.com
+      - tls: 86offer.cn
+        mode: web
+        web: adaptive
+        domain: github-dev.86offer.cn
     packages: []
     overrides:
       topology:
@@ -175,6 +271,38 @@ profiles:
         mode: web
         web: adaptive
         domain: github.dtupay.cn
+      - tls: skubc.com
+        mode: web
+        web: adaptive
+        domain: github.skubc.com
+      - tls: skubc.cn
+        mode: web
+        web: adaptive
+        domain: github.skubc.cn
+      - tls: zowalk.com
+        mode: web
+        web: adaptive
+        domain: github.zowalk.com
+      - tls: zowalk.cn
+        mode: web
+        web: adaptive
+        domain: github.zowalk.cn
+      - tls: offer86.com
+        mode: web
+        web: adaptive
+        domain: github.offer86.com
+      - tls: offer86.cn
+        mode: web
+        web: adaptive
+        domain: github.offer86.cn
+      - tls: 86offer.com
+        mode: web
+        web: adaptive
+        domain: github.86offer.com
+      - tls: 86offer.cn
+        mode: web
+        web: adaptive
+        domain: github.86offer.cn
     packages: []
     overrides:
       topology:
