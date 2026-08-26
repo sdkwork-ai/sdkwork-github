@@ -1,6 +1,0 @@
-{
-  "deploymentProfile": "standalone",
-  "environment": "development",
-  "runtimeTarget": "browser",
-  "appApiBaseUrl": "http://127.0.0.1:4100"
-}
