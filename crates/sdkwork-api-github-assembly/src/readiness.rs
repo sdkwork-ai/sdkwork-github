@@ -28,5 +28,10 @@ async fn ping_database(pool: &DatabasePool) -> Result<(), String> {
             .await
             .map(|_| ())
             .map_err(|error| format!("postgres ping failed: {error}")),
+        DatabasePool::Sqlite(sqlite, _) => sqlx::query("SELECT 1")
+            .execute(sqlite)
+            .await
+            .map(|_| ())
+            .map_err(|error| format!("sqlite ping failed: {error}")),
     }
 }
