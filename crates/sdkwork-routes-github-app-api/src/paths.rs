@@ -10,14 +10,14 @@ pub const INTEGRATION_OAUTH_CALLBACK: &str = "/app/v3/api/github/integration/oau
 
 // Tracker paths
 pub const TRACKER_ISSUES: &str = "/app/v3/api/github/tracker/issues";
-pub const TRACKER_ISSUE_DETAIL: &str = "/app/v3/api/github/tracker/issues/:issue_id";
-pub const TRACKER_ISSUE_COMMENTS: &str = "/app/v3/api/github/tracker/issues/:issue_id/comments";
-pub const TRACKER_ISSUE_VOTES: &str = "/app/v3/api/github/tracker/issues/:issue_id/votes";
-pub const TRACKER_ISSUE_VOTE_STATUS: &str = "/app/v3/api/github/tracker/issues/:issue_id/votes/status";
+pub const TRACKER_ISSUE_DETAIL: &str = "/app/v3/api/github/tracker/issues/{issue_id}";
+pub const TRACKER_ISSUE_COMMENTS: &str = "/app/v3/api/github/tracker/issues/{issue_id}/comments";
+pub const TRACKER_ISSUE_VOTES: &str = "/app/v3/api/github/tracker/issues/{issue_id}/votes";
+pub const TRACKER_ISSUE_VOTE_STATUS: &str = "/app/v3/api/github/tracker/issues/{issue_id}/votes/status";
 pub const TRACKER_LABELS: &str = "/app/v3/api/github/tracker/labels";
 pub const TRACKER_MILESTONES: &str = "/app/v3/api/github/tracker/milestones";
-pub const TRACKER_MILESTONE_ISSUES: &str = "/app/v3/api/github/tracker/milestones/:milestone_id/issues";
+pub const TRACKER_MILESTONE_ISSUES: &str = "/app/v3/api/github/tracker/milestones/{milestone_id}/issues";
 pub const TRACKER_ROADMAPS: &str = "/app/v3/api/github/tracker/roadmaps";
-pub const TRACKER_ROADMAP_DETAIL: &str = "/app/v3/api/github/tracker/roadmaps/:roadmap_id";
-pub const TRACKER_ROADMAP_ITEMS: &str = "/app/v3/api/github/tracker/roadmaps/:roadmap_id/items";
-pub const TRACKER_ROADMAP_ITEM_DETAIL: &str = "/app/v3/api/github/tracker/roadmaps/:roadmap_id/items/:item_id";
+pub const TRACKER_ROADMAP_DETAIL: &str = "/app/v3/api/github/tracker/roadmaps/{roadmap_id}";
+pub const TRACKER_ROADMAP_ITEMS: &str = "/app/v3/api/github/tracker/roadmaps/{roadmap_id}/items";
+pub const TRACKER_ROADMAP_ITEM_DETAIL: &str = "/app/v3/api/github/tracker/roadmaps/{roadmap_id}/items/{item_id}";

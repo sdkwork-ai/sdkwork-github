@@ -1824,6 +1824,7 @@ dependencies = [
  "sdkwork-routes-github-app-api",
  "sdkwork-routes-github-backend-api",
  "sdkwork-web-bootstrap",
+ "sdkwork-web-core",
  "sqlx",
  "tokio",
  "tracing",
@@ -1904,7 +1905,6 @@ dependencies = [
  "serde_json",
  "sqlx",
  "thiserror",
- "tokio",
 ]
 
 [[package]]
@@ -1945,7 +1945,6 @@ dependencies = [
  "serde_json",
  "sqlx",
  "thiserror",
- "tokio",
  "tracing",
 ]
 
