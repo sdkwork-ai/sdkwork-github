@@ -7,9 +7,7 @@ mod catalog;
 mod generated;
 mod readiness;
 
-pub use bootstrap::{
-    assemble_api_router, assemble_api_router_from_env, ApiAssembly, ApiAssemblyContribution,
-};
+pub use bootstrap::{assemble_api_router, ApiAssembly, ApiAssemblyContribution, assemble_api_router_from_env, web_module};
 pub use sdkwork_routes_github_app_api::APP_HTTP_ROUTES;
 pub use sdkwork_routes_github_backend_api::BACKEND_HTTP_ROUTES;
 
