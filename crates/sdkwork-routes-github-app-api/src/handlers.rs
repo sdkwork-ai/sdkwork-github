@@ -42,7 +42,7 @@ fn resolve_scope(
         .clone()
         .filter(|value| !is_blank(Some(value.as_str())))
         .or_else(|| principal.tenancy.organization_id.clone())
-        .ok_or_else(|| ApiProblem::bad_request("organization_id is required"))?;
+        .unwrap_or_else(|| "0".to_string());
     Ok((tenant_id, organization_id))
 }
 
@@ -63,7 +63,7 @@ fn resolve_scope_with_user(
         .filter(|v| !is_blank(Some(v)))
         .map(|s| s.to_string())
         .or_else(|| principal.tenancy.organization_id.clone())
-        .ok_or_else(|| ApiProblem::bad_request("organization_id is required"))?;
+        .unwrap_or_else(|| "0".to_string());
     let uid = principal.subject.user_id.clone();
     Ok((tid, oid, uid))
 }

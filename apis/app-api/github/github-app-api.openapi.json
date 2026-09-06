@@ -96,7 +96,6 @@
         "x-sdkwork-api-authority": "sdkwork-github-app-api",
         "x-sdkwork-domain": "github",
         "x-sdkwork-resource": "repositories",
-        "x-sdkwork-permission": "github.repositories.read",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api"
       }
@@ -164,7 +163,6 @@
         "x-sdkwork-api-authority": "sdkwork-github-app-api",
         "x-sdkwork-domain": "github",
         "x-sdkwork-resource": "repositories",
-        "x-sdkwork-permission": "github.repositories.sync",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api"
       }
@@ -253,7 +251,6 @@
         "x-sdkwork-api-authority": "sdkwork-github-app-api",
         "x-sdkwork-domain": "github",
         "x-sdkwork-resource": "issues",
-        "x-sdkwork-permission": "github.issues.read",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api"
       }
@@ -328,7 +325,6 @@
         "x-sdkwork-api-authority": "sdkwork-github-app-api",
         "x-sdkwork-domain": "github",
         "x-sdkwork-resource": "issues",
-        "x-sdkwork-permission": "github.issues.sync",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api"
       }
@@ -410,7 +406,6 @@
         "x-sdkwork-api-authority": "sdkwork-github-app-api",
         "x-sdkwork-domain": "github",
         "x-sdkwork-resource": "plans",
-        "x-sdkwork-permission": "github.plans.read",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api"
       }
@@ -478,7 +473,6 @@
         "x-sdkwork-api-authority": "sdkwork-github-app-api",
         "x-sdkwork-domain": "github",
         "x-sdkwork-resource": "catalog",
-        "x-sdkwork-permission": "github.catalog.bootstrap",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api"
       }
@@ -546,7 +540,6 @@
         "x-sdkwork-api-authority": "sdkwork-github-app-api",
         "x-sdkwork-domain": "github",
         "x-sdkwork-resource": "integration",
-        "x-sdkwork-permission": "github.integration.read",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api"
       },
@@ -622,7 +615,6 @@
         "x-sdkwork-api-authority": "sdkwork-github-app-api",
         "x-sdkwork-domain": "github",
         "x-sdkwork-resource": "integration",
-        "x-sdkwork-permission": "github.integration.link",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api"
       },
@@ -658,7 +650,6 @@
         "x-sdkwork-api-authority": "sdkwork-github-app-api",
         "x-sdkwork-domain": "github",
         "x-sdkwork-resource": "integration",
-        "x-sdkwork-permission": "github.integration.unlink",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api"
       }
@@ -726,7 +717,6 @@
         "x-sdkwork-api-authority": "sdkwork-github-app-api",
         "x-sdkwork-domain": "github",
         "x-sdkwork-resource": "integration",
-        "x-sdkwork-permission": "github.integration.oauth.begin",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api"
       }
@@ -769,7 +759,6 @@
         "x-sdkwork-api-authority": "sdkwork-github-app-api",
         "x-sdkwork-domain": "github",
         "x-sdkwork-resource": "integration",
-        "x-sdkwork-permission": "github.integration.oauth.callback",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api"
       }
@@ -901,8 +890,7 @@
         "x-sdkwork-domain": "github",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-resource": "tracker.issues",
-        "x-sdkwork-permission": "github.tracker.issues.list"
+        "x-sdkwork-resource": "tracker.issues"
       },
       "post": {
         "summary": "Create a tracker issue.",
@@ -960,7 +948,6 @@
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
         "x-sdkwork-resource": "tracker.issues",
-        "x-sdkwork-permission": "github.tracker.issues.create",
         "requestBody": {
           "required": true,
           "content": {
@@ -1037,8 +1024,7 @@
         "x-sdkwork-domain": "github",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-resource": "tracker.issues",
-        "x-sdkwork-permission": "github.tracker.issues.detail"
+        "x-sdkwork-resource": "tracker.issues"
       },
       "patch": {
         "summary": "Update a tracker issue.",
@@ -1104,7 +1090,6 @@
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
         "x-sdkwork-resource": "tracker.issues",
-        "x-sdkwork-permission": "github.tracker.issues.update",
         "requestBody": {
           "required": true,
           "content": {
@@ -1197,8 +1182,7 @@
         "x-sdkwork-domain": "github",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-resource": "tracker.issues.comments",
-        "x-sdkwork-permission": "github.tracker.issues.comments.list"
+        "x-sdkwork-resource": "tracker.issues.comments"
       },
       "post": {
         "summary": "Create a comment on a tracker issue.",
@@ -1258,7 +1242,6 @@
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
         "x-sdkwork-resource": "tracker.issues.comments",
-        "x-sdkwork-permission": "github.tracker.issues.comments.create",
         "requestBody": {
           "required": true,
           "content": {
@@ -1329,8 +1312,7 @@
         "x-sdkwork-domain": "github",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-resource": "tracker.issues.votes",
-        "x-sdkwork-permission": "github.tracker.issues.votes.toggle"
+        "x-sdkwork-resource": "tracker.issues.votes"
       }
     },
     "/app/v3/api/github/tracker/issues/{issue_id}/votes/status": {
@@ -1391,8 +1373,7 @@
         "x-sdkwork-domain": "github",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-resource": "tracker.issues.votes",
-        "x-sdkwork-permission": "github.tracker.issues.votes.status"
+        "x-sdkwork-resource": "tracker.issues.votes"
       }
     },
     "/app/v3/api/github/tracker/labels": {
@@ -1451,8 +1432,7 @@
         "x-sdkwork-domain": "github",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-resource": "tracker.labels",
-        "x-sdkwork-permission": "github.tracker.labels.list"
+        "x-sdkwork-resource": "tracker.labels"
       },
       "post": {
         "summary": "Create a tracker label.",
@@ -1510,7 +1490,6 @@
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
         "x-sdkwork-resource": "tracker.labels",
-        "x-sdkwork-permission": "github.tracker.labels.create",
         "requestBody": {
           "required": true,
           "content": {
@@ -1579,8 +1558,7 @@
         "x-sdkwork-domain": "github",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-resource": "tracker.milestones",
-        "x-sdkwork-permission": "github.tracker.milestones.list"
+        "x-sdkwork-resource": "tracker.milestones"
       },
       "post": {
         "summary": "Create a tracker milestone.",
@@ -1638,7 +1616,6 @@
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
         "x-sdkwork-resource": "tracker.milestones",
-        "x-sdkwork-permission": "github.tracker.milestones.create",
         "requestBody": {
           "required": true,
           "content": {
@@ -1737,8 +1714,7 @@
         "x-sdkwork-domain": "github",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-resource": "tracker.milestones",
-        "x-sdkwork-permission": "github.tracker.milestones.issues"
+        "x-sdkwork-resource": "tracker.milestones"
       }
     },
     "/app/v3/api/github/tracker/roadmaps": {
@@ -1819,8 +1795,7 @@
         "x-sdkwork-domain": "github",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-resource": "tracker.roadmaps",
-        "x-sdkwork-permission": "github.tracker.roadmaps.list"
+        "x-sdkwork-resource": "tracker.roadmaps"
       },
       "post": {
         "summary": "Create a tracker roadmap.",
@@ -1878,7 +1853,6 @@
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
         "x-sdkwork-resource": "tracker.roadmaps",
-        "x-sdkwork-permission": "github.tracker.roadmaps.create",
         "requestBody": {
           "required": true,
           "content": {
@@ -1955,8 +1929,7 @@
         "x-sdkwork-domain": "github",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-resource": "tracker.roadmaps",
-        "x-sdkwork-permission": "github.tracker.roadmaps.detail"
+        "x-sdkwork-resource": "tracker.roadmaps"
       },
       "patch": {
         "summary": "Update a tracker roadmap.",
@@ -2022,7 +1995,6 @@
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
         "x-sdkwork-resource": "tracker.roadmaps",
-        "x-sdkwork-permission": "github.tracker.roadmaps.update",
         "requestBody": {
           "required": true,
           "content": {
@@ -2094,7 +2066,6 @@
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
         "x-sdkwork-resource": "tracker.roadmaps.items",
-        "x-sdkwork-permission": "github.tracker.roadmaps.items.add",
         "requestBody": {
           "required": true,
           "content": {
@@ -2151,8 +2122,7 @@
         "x-sdkwork-domain": "github",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-api-surface": "app-api",
-        "x-sdkwork-resource": "tracker.roadmaps.items",
-        "x-sdkwork-permission": "github.tracker.roadmaps.items.remove"
+        "x-sdkwork-resource": "tracker.roadmaps.items"
       }
     }
   },
