@@ -28,6 +28,10 @@ profiles:
         mode: web
         web: adaptive
         domain: github-dev.dtupay.com
+      - tls: noaper.com
+        mode: web
+        web: adaptive
+        domain: github-dev.noaper.com
       - tls: sdkwork.cn
         mode: web
         web: adaptive
@@ -40,6 +44,10 @@ profiles:
         mode: web
         web: adaptive
         domain: github-dev.dtupay.cn
+      - tls: noaper.cn
+        mode: web
+        web: adaptive
+        domain: github-dev.noaper.cn
       - tls: skubc.com
         mode: web
         web: adaptive
@@ -105,6 +113,10 @@ profiles:
         mode: web
         web: adaptive
         domain: github.dtupay.com
+      - tls: noaper.com
+        mode: web
+        web: adaptive
+        domain: github.noaper.com
       - tls: sdkwork.cn
         mode: web
         web: adaptive
@@ -117,6 +129,10 @@ profiles:
         mode: web
         web: adaptive
         domain: github.dtupay.cn
+      - tls: noaper.cn
+        mode: web
+        web: adaptive
+        domain: github.noaper.cn
       - tls: skubc.com
         mode: web
         web: adaptive
@@ -182,6 +198,10 @@ profiles:
         mode: web
         web: adaptive
         domain: github-dev.dtupay.com
+      - tls: noaper.com
+        mode: web
+        web: adaptive
+        domain: github-dev.noaper.com
       - tls: sdkwork.cn
         mode: web
         web: adaptive
@@ -194,6 +214,10 @@ profiles:
         mode: web
         web: adaptive
         domain: github-dev.dtupay.cn
+      - tls: noaper.cn
+        mode: web
+        web: adaptive
+        domain: github-dev.noaper.cn
       - tls: skubc.com
         mode: web
         web: adaptive
@@ -259,6 +283,10 @@ profiles:
         mode: web
         web: adaptive
         domain: github.dtupay.com
+      - tls: noaper.com
+        mode: web
+        web: adaptive
+        domain: github.noaper.com
       - tls: sdkwork.cn
         mode: web
         web: adaptive
@@ -271,6 +299,10 @@ profiles:
         mode: web
         web: adaptive
         domain: github.dtupay.cn
+      - tls: noaper.cn
+        mode: web
+        web: adaptive
+        domain: github.noaper.cn
       - tls: skubc.com
         mode: web
         web: adaptive
