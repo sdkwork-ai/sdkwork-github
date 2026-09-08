@@ -41,6 +41,7 @@
     "@sdkwork/github-app-sdk": "workspace:*",
     "@sdkwork/github-pc-commons": "workspace:*",
     "@sdkwork/iam-contracts": "workspace:*",
+    "@sdkwork/sdk-common": "workspace:*",
     "react": "catalog:"
   },
   "devDependencies": {

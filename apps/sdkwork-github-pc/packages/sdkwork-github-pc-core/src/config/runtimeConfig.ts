@@ -1,3 +1,5 @@
+import { resolveBaseUrl } from '@sdkwork/sdk-common';
+
 export type SdkworkEnvironment = 'development' | 'test' | 'staging' | 'production';
 export type SdkworkDeploymentProfile = 'standalone' | 'cloud';
 
@@ -18,8 +20,6 @@ export interface RuntimeEnv {
   DEV?: boolean;
 }
 
-const LOCAL_APP_API_BASE_URL = 'http://127.0.0.1:4100';
-
 function readEnv(env: RuntimeEnv, key: string): string | undefined {
   const value = env[key as keyof RuntimeEnv];
   return typeof value === 'string' && value.trim() ? value.trim() : undefined;
@@ -33,10 +33,11 @@ export function createRuntimeConfig(env: RuntimeEnv): GithubRuntimeConfig {
     ? (environmentRaw as SdkworkEnvironment)
     : 'development';
 
+  // Prefer an explicit VITE override; otherwise resolve the shared
+  // SDKWORK_API_BASE_URL through @sdkwork/sdk-common (env + brand + protocol
+  // aware), eliminating the hardcoded localhost / window.origin default.
   const configuredBaseUrl = readEnv(env, 'VITE_SDKWORK_GITHUB_APPLICATION_PUBLIC_HTTP_URL');
-  const appApiBaseUrl =
-    configuredBaseUrl
-    ?? (env.DEV ? LOCAL_APP_API_BASE_URL : (typeof window !== 'undefined' ? window.location.origin : LOCAL_APP_API_BASE_URL));
+  const appApiBaseUrl = configuredBaseUrl ?? resolveBaseUrl().url;
 
   return {
     appKey: 'sdkwork-github-pc',
@@ -47,11 +48,6 @@ export function createRuntimeConfig(env: RuntimeEnv): GithubRuntimeConfig {
   };
 }
 
-export function normalizeGeneratedSdkBaseUrl(baseUrl: string, apiPrefix = '/app/v3/api'): string {
-  const normalizedBaseUrl = baseUrl.replace(/\/+$/, '');
-  const normalizedApiPrefix = apiPrefix.replace(/\/+$/, '');
-  if (normalizedBaseUrl.endsWith(normalizedApiPrefix)) {
-    return normalizedBaseUrl.slice(0, -normalizedApiPrefix.length) || normalizedBaseUrl;
-  }
-  return normalizedBaseUrl;
+export function normalizeGeneratedSdkBaseUrl(baseUrl: string, _apiPrefix = '/app/v3/api'): string {
+  return resolveBaseUrl({ baseUrls: [baseUrl] }).url;
 }
