@@ -1,4 +1,4 @@
-import { resolveBaseUrl } from '@sdkwork/sdk-common';
+import {resolveBaseUrlWithAlignProtocol} from '@sdkwork/sdk-common';
 
 export type SdkworkEnvironment = 'development' | 'test' | 'staging' | 'production';
 export type SdkworkDeploymentProfile = 'standalone' | 'cloud';
@@ -37,7 +37,7 @@ export function createRuntimeConfig(env: RuntimeEnv): GithubRuntimeConfig {
   // SDKWORK_API_BASE_URL through @sdkwork/sdk-common (env + brand + protocol
   // aware), eliminating the hardcoded localhost / window.origin default.
   const configuredBaseUrl = readEnv(env, 'VITE_SDKWORK_GITHUB_APPLICATION_PUBLIC_HTTP_URL');
-  const appApiBaseUrl = configuredBaseUrl ?? resolveBaseUrl().url;
+  const appApiBaseUrl = configuredBaseUrl ?? resolveBaseUrlWithAlignProtocol().url;
 
   return {
     appKey: 'sdkwork-github-pc',
@@ -49,5 +49,5 @@ export function createRuntimeConfig(env: RuntimeEnv): GithubRuntimeConfig {
 }
 
 export function normalizeGeneratedSdkBaseUrl(baseUrl: string, _apiPrefix = '/app/v3/api'): string {
-  return resolveBaseUrl({ baseUrls: [baseUrl] }).url;
+  return resolveBaseUrlWithAlignProtocol({ baseUrls: [baseUrl] }).url;
 }
