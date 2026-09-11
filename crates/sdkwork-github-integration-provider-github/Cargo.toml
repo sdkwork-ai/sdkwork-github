@@ -1,9 +1,13 @@
 [package]
+rust-version.workspace = true
 name = "sdkwork-github-integration-provider-github"
 version.workspace = true
 edition.workspace = true
 description = "GitHub REST provider adapter for SDKWork GitHub integration."
 
+
+[lints]
+workspace = true
 [lib]
 name = "sdkwork_github_integration_provider_github"
 path = "src/lib.rs"

@@ -1,4 +1,5 @@
 [package]
+rust-version.workspace = true
 name = "sdkwork-api-github-standalone-gateway"
 version.workspace = true
 edition.workspace = true
@@ -8,6 +9,9 @@ edition.workspace = true
 name = "sdkwork-api-github-standalone-gateway"
 path = "src/main.rs"
 
+
+[lints]
+workspace = true
 [dependencies]
 sdkwork_api_github_assembly.workspace = true
 sdkwork-api-iam-assembly.workspace = true
