@@ -15,7 +15,7 @@
     }
   },
   "generatorName": "@sdkwork/sdk-generator",
-  "generatorPath": "E:\\sdkwork-space\\sdkwork-sdk-generator\\bin\\sdkgen.js",
+  "generatorPath": "../sdkwork-sdk-generator/bin/sdkgen.js",
   "baseUrl": "http://127.0.0.1:4100",
   "standardProfile": "sdkwork-v3",
   "fixedSdkVersion": "0.1.0",

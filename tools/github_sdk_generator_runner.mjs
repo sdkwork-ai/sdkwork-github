@@ -15,6 +15,14 @@ const STANDARD_SDK_GENERATOR_BIN = path.resolve(
   workspaceRoot,
   '../sdkwork-sdk-generator/bin/sdkgen.js',
 );
+// `sdk-manifest.json` records the generator as a path relative to the repository
+// root. The workspace is relocatable, so an absolute generator path is a machine
+// binding that breaks on every move (`DEPENDENCY_MANAGEMENT_SPEC.md` section 1),
+// and nothing reads the recorded value back.
+const STANDARD_SDK_GENERATOR_MANIFEST_PATH = path
+  .relative(workspaceRoot, STANDARD_SDK_GENERATOR_BIN)
+  .split(path.sep)
+  .join("/");
 
 function fail(sdkName, message) {
   process.stderr.write(`[${sdkName}] ${message}\n`);
@@ -129,7 +137,7 @@ function writeSdkManifest({ family, inputPath, baseUrl, languages }) {
       ]),
     ),
     generatorName: '@sdkwork/sdk-generator',
-    generatorPath: STANDARD_SDK_GENERATOR_BIN,
+    generatorPath: STANDARD_SDK_GENERATOR_MANIFEST_PATH,
     baseUrl,
     standardProfile: STANDARD_PROFILE,
     fixedSdkVersion: FIXED_SDK_VERSION,
