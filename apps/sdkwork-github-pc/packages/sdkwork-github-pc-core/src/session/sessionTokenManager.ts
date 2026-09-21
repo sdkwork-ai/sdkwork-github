@@ -1,3 +1,4 @@
+import { readBootstrapAccessTokenFromProcessEnv } from '@sdkwork/iam-credential-entry';
 import type { SessionSnapshot, SessionStore } from './sessionStore';
 
 export interface GithubSessionTokenManager {
@@ -18,7 +19,9 @@ export function createGithubSessionTokenManager(session: SessionStore): GithubSe
       session.clearSession();
     },
     getAccessToken() {
-      return session.getSnapshot().accessToken;
+      // Fall back to the private bootstrap Access-Token artifact when no
+      // interactive session exists (APP_SDK_INTEGRATION_SPEC section 4).
+      return session.getSnapshot().accessToken ?? readBootstrapAccessTokenFromProcessEnv();
     },
     getAuthToken() {
       return session.getSnapshot().authToken;

@@ -24,6 +24,7 @@
     "@sdkwork/github-pc-core": "workspace:*",
     "@sdkwork/github-pc-shell": "workspace:*",
     "@sdkwork/github-pc-workspace": "workspace:*",
+    "@sdkwork/iam-credential-entry": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-router-dom": "catalog:"
