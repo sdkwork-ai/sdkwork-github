@@ -22,13 +22,13 @@ Do not copy root standard text into this repository. If these relative paths do 
 
 ## Application Identity
 
-Application manifest: `apps/sdkwork-github-pc/sdkwork.app.config.json`. Root manifest: `sdkwork.app.config.json`.
+Application manifest: `apps/sdkwork-github-pc/agent.app.config.json`. Root manifest: `agent.app.config.json`.
 
 ## Local Dictionary Structure
 
 - `AGENTS.md`: local agent entrypoint and relative SDKWORK spec index.
 - `CLAUDE.md`, `GEMINI.md`, `CODEX.md`: compatibility shims pointing to `AGENTS.md`.
-- `sdkwork.app.config.json`: workspace application manifest.
+- `agent.app.config.json`: workspace application manifest.
 - `.sdkwork/`: source-controlled workspace metadata (`skills/`, `plugins/`).
 - `specs/`: topology and component contracts.
 - `sdks/`: SDK family workspaces and route manifests.
@@ -46,7 +46,7 @@ Application manifest: `apps/sdkwork-github-pc/sdkwork.app.config.json`. Root man
 ## Spec Resolution Order
 
 1. Read this `AGENTS.md` and any nearer component-level `AGENTS.md`.
-2. Read `sdkwork.app.config.json` and `apps/sdkwork-github-pc/sdkwork.app.config.json`.
+2. Read `agent.app.config.json` and `apps/sdkwork-github-pc/agent.app.config.json`.
 3. Read local `specs/` when present.
 4. Read `../sdkwork-specs/README.md` and task-specific root specs.
 5. Inspect implementation files only after dictionary entries are clear.

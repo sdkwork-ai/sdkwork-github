@@ -6,7 +6,7 @@
     "name": "SDKWork GitHub",
     "repository": "sdkwork-ai/sdkwork-github",
     "sourcePath": "apps/sdkwork-github-pc",
-    "configPath": "apps/sdkwork-github-pc/sdkwork.app.config.json"
+    "configPath": "apps/sdkwork-github-pc/agent.app.config.json"
   },
   "release": {
     "artifactPrefix": "sdkwork-github",

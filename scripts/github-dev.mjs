@@ -21,7 +21,7 @@ const profileEnv = Object.fromEntries(
 const iamRepoRoot = resolve(root, '..', 'sdkwork-iam');
 const env = mergeRepoDevBootstrapAccessTokenEnv({
   repoRoot: root,
-  manifestPath: 'apps/sdkwork-github-pc/sdkwork.app.config.json',
+  manifestPath: 'apps/sdkwork-github-pc/agent.app.config.json',
   appId: 'sdkwork-github-pc',
   env: {
     ...profileEnv,

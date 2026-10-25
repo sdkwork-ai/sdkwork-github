@@ -14,7 +14,7 @@ const REQUIRED_WORKSPACE_FILES = [
   'AGENTS.md', 'CLAUDE.md', 'CODEX.md', 'GEMINI.md', 'README.md', 'Cargo.toml',
   'sdkwork.workflow.json', '.github/workflows/package.yml',
   '.sdkwork/README.md', '.sdkwork/.gitignore', '.sdkwork/skills/README.md', '.sdkwork/plugins/README.md',
-  'docs/root-layout.md', 'sdkwork.app.config.json',
+  'docs/root-layout.md', 'agent.app.config.json',
 ];
 
 const API_INPUTS = [
@@ -151,10 +151,10 @@ test('OpenAPI app-api declares x-sdkwork metadata on operations', () => {
 });
 
 test('PC application root follows apps/sdkwork-github-pc layout', () => {
-  assert.equal(exists('apps/sdkwork-github-pc/sdkwork.app.config.json'), true);
+  assert.equal(exists('apps/sdkwork-github-pc/agent.app.config.json'), true);
   assert.equal(exists('apps/sdkwork-github-pc/AGENTS.md'), true);
-  const manifest = readJson('apps/sdkwork-github-pc/sdkwork.app.config.json');
-  assert.equal(manifest.kind, 'sdkwork.app');
+  const manifest = readJson('apps/sdkwork-github-pc/agent.app.config.json');
+  assert.equal(manifest.kind, 'agent.app');
 });
 
 test('declares production readiness and OAuth alignment surfaces', () => {
