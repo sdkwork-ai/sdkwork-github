@@ -12,7 +12,7 @@ const STANDARD_ROOT_DIRECTORIES = [
 
 const REQUIRED_WORKSPACE_FILES = [
   'AGENTS.md', 'CLAUDE.md', 'CODEX.md', 'GEMINI.md', 'README.md', 'Cargo.toml',
-  'sdkwork.workflow.json', '.github/workflows/package.yml',
+  'agent.workflow.json', '.github/workflows/package.yml',
   '.sdkwork/README.md', '.sdkwork/.gitignore', '.sdkwork/skills/README.md', '.sdkwork/plugins/README.md',
   'docs/root-layout.md', 'agent.app.config.json',
 ];
@@ -52,7 +52,7 @@ test('declares workspace agent entrypoints and packaging workflow', () => {
   for (const file of REQUIRED_WORKSPACE_FILES) {
     assert.equal(exists(file), true, `${file} should exist`);
   }
-  const workflow = readJson('sdkwork.workflow.json');
+  const workflow = readJson('agent.workflow.json');
   assert.equal(workflow.app.id, 'sdkwork-github');
 });
 

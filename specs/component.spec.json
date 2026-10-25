@@ -13,7 +13,7 @@
     "languages": ["rust", "typescript"],
     "generated": false,
     "private": false,
-    "manifests": ["Cargo.toml", "package.json", "sdkwork.workflow.json", "specs/topology.spec.json"]
+    "manifests": ["Cargo.toml", "package.json", "agent.workflow.json", "specs/topology.spec.json"]
   },
   "canonicalSpecs": [
     { "file": "README.md", "path": "../sdkwork-specs/README.md", "purpose": "SDKWork root standards entrypoint." },

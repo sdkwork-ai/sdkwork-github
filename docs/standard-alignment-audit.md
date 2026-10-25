@@ -11,7 +11,7 @@
 | sdkwork-database | 已对齐 | `database.manifest.json`、migrations、seed-on-boot 拓扑开关 |
 | sdkwork-utils | 已对齐 | Rust `sdkwork-utils-rust` + PC `@sdkwork/utils` |
 | sdkwork-discovery | 不适用 | 当前无 gRPC/RPC 服务 |
-| 部署与打包 | 已对齐 | `sdkwork.workflow.json` + 薄 GitHub workflow |
+| 部署与打包 | 已对齐 | `agent.workflow.json` + 薄 GitHub workflow |
 | 生产就绪 | 已对齐 | `health.rs` 就绪探针与指标快照、OAuth/catalog 拓扑配置 |
 
 ## 近期对齐项（2026-06-29）
