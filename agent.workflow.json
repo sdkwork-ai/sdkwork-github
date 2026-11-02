@@ -56,11 +56,19 @@
   },
   "targets": [
     {
-      "id": "web-standalone-browser-x64",
+      "id": "web-x64-standalone-browser-zip",
+      "profileBinding": "fixed",
+      "deploymentProfile": "standalone",
+      "runtimeTarget": "browser",
+      "targetPlatform": "web",
+      "clientArchitecture": "pc-web",
+      "profile": "browser",
       "platform": "web",
       "architecture": "x64",
-      "profile": "standalone-browser",
-      "format": "zip",
+      "formats": [
+        "zip"
+      ],
+      "runner": "ubuntu-24.04",
       "outputGlobs": [
         "apps/sdkwork-github-pc/dist/**"
       ]

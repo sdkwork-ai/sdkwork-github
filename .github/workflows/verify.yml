@@ -1,14 +1,15 @@
-name: verify
+name: Verify Application
 
+# Thin verification entrypoint. Runner setup, dependency checkouts, toolchain
+# versions, and the install command come from the reusable SDKWork CI workflow
+# and `agent.workflow.json`; this file only selects the triggers and the gate
+# scripts. Never add inline setup, install, or gate commands here — declare them
+# in `agent.workflow.json` or the repository's package scripts instead.
 on:
-  pull_request:
-    branches:
-      - main
-      - master
   push:
     branches:
       - main
-      - master
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -16,30 +17,12 @@ permissions:
 
 jobs:
   verify:
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.30.2
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Install root dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Install PC workspace dependencies
-        working-directory: apps/sdkwork-github-pc
-        run: pnpm install --frozen-lockfile
-
-      - name: Verify workspace
-        run: pnpm verify
+    uses: sdkwork-ai/sdkwork-github-workflow/.github/workflows/sdkwork-ci.yml@b0829529b9277a3da32b90c2d36ff34ff09fa832
+    with:
+      config_path: agent.workflow.json
+      scripts: verify
+      install_command: pnpm install --frozen-lockfile
+      os_matrix: '["ubuntu-24.04"]'
+      framework_ref: b0829529b9277a3da32b90c2d36ff34ff09fa832
+    secrets:
+      SDKWORK_RELEASE_TOKEN: ${{ secrets.SDKWORK_RELEASE_TOKEN }}
