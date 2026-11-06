@@ -11,7 +11,14 @@
     "appType": "APP_REACT",
     "versionSource": "package.json"
   },
-  "backend": {},
+  "backend": {
+    "appId": "sdkwork-github-pc",
+    "tenantId": "100001",
+    "organizationId": "0",
+    "accessTokenPermissionScope": [
+      "iam:self"
+    ]
+  },
   "runtime": {
     "family": "web",
     "framework": "react",
